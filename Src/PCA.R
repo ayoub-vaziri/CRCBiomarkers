@@ -12,9 +12,9 @@ bio_data <- fread("Res/exprBatchBioData/bioColorectal.txt", header = FALSE)$V1
 
 smps <- 1:52
 
-DEGsRGs <- fread("Res/PPI/DEGsRGs.txt", header = FALSE)$V1
+DEGsCRG <- fread("Res/PPI/DEGsCRGs.txt", header = FALSE)$V1
 
-valid_data <- train_data[smps,DEGsRGs]
+valid_data <- train_data[smps,DEGsCRG]
 rownames(valid_data) <- valid_data$V1
 valid_data <- valid_data[,-1]
 
