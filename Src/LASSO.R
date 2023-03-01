@@ -65,12 +65,12 @@ dat %>%
   arrange(Beta) %>% 
   mutate(Gene = factor(Gene, levels=dat$Gene)) %>% 
   ggplot(aes(fill=Gene, y=Beta, x=Gene)) + 
-  geom_bar(stat="identity") +
+  geom_bar(stat="identity", width = 0.85) +
   theme_bw() +
   xlab("") +
   ylab("Coefficient") +
   theme(axis.title.y = element_text(size = 12),
-        axis.text.x = element_text(colour = "black", angle = 45, hjust = 1, size = 9),
+        axis.text.x = element_text(colour = "black", angle = 45, hjust = 1, size = 10),
         axis.text.y = element_text(colour = "black", size = 10),
         legend.position = "none")
 dev.off()
@@ -80,12 +80,12 @@ dat %>%
   arrange(Beta) %>% 
   mutate(Gene = factor(Gene, levels=dat$Gene)) %>% 
   ggplot(aes(fill=Gene, y=Beta, x=Gene)) + 
-  geom_bar(stat="identity") +
+  geom_bar(stat="identity", width = 0.85) +
   theme_bw() +
   xlab("") +
   ylab("Coefficient") +
   theme(axis.title.y = element_text(size = 12),
-        axis.text.x = element_text(colour = "black", angle = 45, hjust = 1, size = 9),
+        axis.text.x = element_text(colour = "black", angle = 45, hjust = 1, size = 10),
         axis.text.y = element_text(colour = "black", size = 10),
         legend.position = "none")
 dev.off()
