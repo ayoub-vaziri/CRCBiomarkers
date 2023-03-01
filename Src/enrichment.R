@@ -3,11 +3,12 @@ library(DOSE)
 library(clusterProfiler)
 library(enrichplot)
 library(dplyr)
+library(AnnotationDbi)
 library(org.Hs.eg.db)
 
 setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
 
-symbol <- fread("Res/PPI/DEGsRGs.txt", header = F)$V1
+symbol <- fread("Res/PPI/DEGsCRGs.txt", header = F)$V1
 
 #### GO enrichment analysis ####
 ################################
@@ -19,11 +20,11 @@ ego <- enrichGO(gene = symbol,
                pvalueCutoff = 0.05,
                qvalueCutoff = 0.05)
 
-png("Res/enrichment/GOenrichment.png", height = 2200, width = 2200, res = 300)
+png("Res/enrichment/GOenrichment.png", height = 2000, width = 2600, res = 300)
 barplot(ego, 
         split = "ONTOLOGY", 
         showCategory = 10, 
-        font.size = 8.5, 
+        font.size = 9, 
         color = "qvalue", 
         label_format = 60) +
   facet_grid(ONTOLOGY~., scale = "free")
@@ -33,19 +34,19 @@ dev.off()
 entrezid <- mapIds(x = org.Hs.eg.db, keys = symbol, column = "ENTREZID", keytype = "SYMBOL") %>% 
   as.data.frame()
 
+
 #### KEGG enrichment analysis ####
 ##################################
 ekegg <- enrichKEGG(gene = entrezid$.,
            organism = "hsa",
            keyType = "kegg",
            pvalueCutoff = 0.05,
-           pAdjustMethod = "BH",
-           qvalueCutoff = 0.05)
+           pAdjustMethod = "BH")
 
-png("Res/enrichment/KEGGenrichment.png", height = 2000, width = 2000, res = 300)
-dotplot(ekegg, 
+png("Res/enrichment/KEGGenrichment.png", height = 2000, width = 3400, res = 300)
+barplot(ekegg, 
         showCategory = 10, 
-        font.size = 8, 
+        font.size = 14, 
         color = "qvalue", 
         label_format = 70)
 dev.off()
@@ -56,14 +57,13 @@ dev.off()
 edo <- enrichDO(gene = entrezid$.,
                 ont = "DO",
                 pvalueCutoff = 0.05,
-                pAdjustMethod = "BH",
-                qvalueCutoff = 0.05
+                pAdjustMethod = "BH"
 )
 
-png("Res/enrichment/DOenrichment.png", height = 2000, width = 2800, res = 300)
-barplot(edo, 
-        showCategory = 10, 
-        font.size = 10, 
+png("Res/enrichment/DOenrichment.png", height = 2000, width = 2600, res = 300)
+dotplot(edo, 
+        showCategory = 20, 
+        font.size = 14, 
         color = "qvalue", 
         label_format = 70,
         )

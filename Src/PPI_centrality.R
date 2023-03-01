@@ -28,16 +28,6 @@ prop_cent <- proper_centralities(ppi)
 
 calc_cent <- calculate_centralities(ppi, include = prop_cent[c(1:5,7:49)])
 
-pdf("PPI/pca_centralities.pdf")
-pca <- pca_centralities(calc_cent)
-pca$labels$title <- ""
-pca + 
-  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5),
-        axis.title.x = element_text(size = 14),
-        axis.title.y = element_text(size = 14),
-        plot.margin = margin(rep(15, 4)))
-dev.off()
-
 png("PPI/pca_centralities.png", height = 2200, width = 2600, res = 300)
 options(repr.plot.width = 200, repr.plot.height = 100)
 pca <- pca_centralities(calc_cent)
@@ -48,6 +38,12 @@ pca +
         axis.title.y = element_text(size = 14),
         plot.margin = margin(rep(15, 4)))
 dev.off()
+
+pca_data <- pca$data
+pca_data <- pca_data[order(pca_data$contrib, decreasing = TRUE),]
+rownames(pca_data) <- NULL
+colnames(pca_data) <- c("Centrality measure", "Contribution")
+write.csv(pca_data, "PPI/pca_centrality_data.csv")
 
 measure <- "Diffusion Degree"
 cnt <- calculate_centralities(ppi, include = measure)

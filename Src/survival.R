@@ -36,6 +36,7 @@ for(x in c(2,3)) clinData[,x] <- as.numeric(clinData[,x])
 clinData <- na.omit(clinData)
 rownames(clinData) <- NULL
 
+colnames(mrnaData)[4476] <- "CXCL1"
 mrnaClin <- merge(clinData, mrnaData, by="PATIENT_ID")
 rownames(mrnaClin) <- mrnaClin$PATIENT_ID
 mrnaClin <- mrnaClin[,-1]
@@ -67,7 +68,7 @@ survplt <- function(fit, dat, gene, title) {
              font.ytickslab=c(12,"plain"),
              ######## Format Legend #######
              legend.title = gene,
-             font.legend =c(13, "black"),
+             font.legend =c(18, "black"),
              legend.labs = c("high", "low"),
              legend = c(.83, .85),
              ######## Plot Dimensions #######
@@ -79,7 +80,7 @@ survplt <- function(fit, dat, gene, title) {
              ######## p-value details #######
              pval = TRUE,
              pval.method = TRUE,
-             pval.size = 5.5,
+             pval.size = 7,
              pval.method.size = 5,
              pval.coord = c(1,0.1),
              pval.method.coord = c(1, 0.18)
@@ -99,8 +100,8 @@ dfs_mrna_colorectal <- dfs_mrna_colorectal[,-1]
 
 survAnalysis <- function(gene, dat, time, status, title) {
   data <- dat[, c(status, time, gene)]
-  high <- which(data[,3] >= mean(data[,3]))
-  low <- which(data[,3] < mean(data[,3]))
+  high <- which(data[,3] >= median(data[,3]))
+  low <- which(data[,3] < median(data[,3]))
   data[high,3] <- "high"
   data[low,3] <- "low"
   sfit <- survfit(Surv(data[,2], data[,1]) ~ data[,3], data=data)
@@ -109,6 +110,7 @@ survAnalysis <- function(gene, dat, time, status, title) {
 
 lassoRfGenes <- fread("Res/venn/lassoRfGenes.txt", header = FALSE)$V1
 lassoRfGenes <- lassoRfGenes[-1]
+lassoRfGenes <- sort(lassoRfGenes)
 
 Map(function(g) {
   survAnalysis(g, os_mrna_colorectal, "OS_MONTHS", "OS_STATUS", "Overall Survival")
@@ -128,23 +130,23 @@ dev.off()
 
 Map(function(g) {
   survAnalysis(g, os_mrna_colorectal, "OS_MONTHS", "OS_STATUS", "Overall Survival")
-}, c("SPP1", "BGN")) -> list_os_plots
+}, c("BGN", "SPP1")) -> list_os_plots
 
 Map(function(g) {
   survAnalysis(g, dfs_mrna_colorectal, "DFS_MONTHS", "DFS_STATUS", "Disease Free Survival")
-}, c("SPP1", "BGN")) -> list_dfs_plots
+}, c("BGN", "SPP1")) -> list_dfs_plots
 
-png(filename = "Res/survival/Res/OS_survival_analysis.png", width = 3200, height = 1600, res = 300)
+png(filename = "Res/survival/Res/OS_survival_analysis.png", width = 2600, height = 1200, res = 300)
 arrange_ggsurvplots(list_os_plots, print = TRUE, nrow = 1, ncol = 2)
 dev.off()
 
-png(filename = "Res/survival/Res/DFS_survival_analysis.png", width = 3200, height = 1600, res = 300)
+png(filename = "Res/survival/Res/DFS_survival_analysis.png", width = 2600, height = 1200, res = 300)
 arrange_ggsurvplots(list_dfs_plots, print = TRUE, nrow = 1, ncol = 2)
 dev.off()
 
-list_plots <- c(list_os_plots, list_dfs_plots)
+list_plots <- c(list_os_plots[1], list_dfs_plots[1], list_os_plots[2], list_dfs_plots[2])
 
-png(filename = "Res/survival/Res/OS_DFS_survival_analysis.png", width = 3000, height = 2800, res = 300)
+png(filename = "Res/survival/Res/OS_DFS_survival_analysis.png", width = 2800, height = 2600, res = 300)
 arrange_ggsurvplots(list_plots, print = TRUE, nrow = 2, ncol = 2)
 dev.off()
 ###########################
@@ -171,10 +173,10 @@ forestPlot <- uniOutput |>
              xticks = c(-0.32, 0, 0.425),
              lwd.xaxis = 1.5,
              lwd.ci = 1.4,
-             lwd.zero = 2,
+             lwd.zero = 2.2,
              boxsize = 0.2,
              colgap = unit(1, "cm"),
-             #hrzl_lines = TRUE,
+             hrzl_lines = TRUE,
              xlab = "Hazard ratio",
              #title = "Univariate Cox regression",
              vertices = TRUE,
@@ -188,7 +190,7 @@ forestPlot <- uniOutput |>
                 pvalue = c("p-value"),
                 HR = c("HR (95% CI)"))
 
-png("Res/survival/Res/univariateAnalysis.png", height = 2000, width = 2200, res = 300)
+png("Res/survival/Res/univariateAnalysis.png", height = 1800, width = 2000, res = 300)
 forestPlot
 dev.off()
 ############################################

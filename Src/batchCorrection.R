@@ -34,12 +34,12 @@ theme <- theme(strip.text.y = element_text(),
                panel.border=element_rect(colour="black",size=2),
                legend.key=element_blank())
 
-clrs <- c(rep("#1B9E77",nrow(expr25070)), 
-          rep("#66A61E",nrow(expr25071)), 
-          rep("#7570B3",nrow(expr44076)), 
-          rep("#D95F02",nrow(expr106582)),
-          rep("#E6AB02",nrow(expr110223)),
-          rep("#E7298A",nrow(expr110224))
+clrs <- c(rep("#1B9E77",length(which(batchColorectal == 1))), 
+          rep("#66A61E",length(which(batchColorectal == 2))), 
+          rep("#7570B3",length(which(batchColorectal == 3))), 
+          rep("#D95F02",length(which(batchColorectal == 4))),
+          rep("#E6AB02",length(which(batchColorectal == 5))),
+          rep("#E7298A",length(which(batchColorectal == 6)))
           )
 
 grps <- c("GSE25070", "GSE25071", "GSE44076", "GSE106582", "GSE110223", "GSE110224")

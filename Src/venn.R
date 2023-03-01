@@ -15,18 +15,18 @@ lstDEGsCRGs <- list(
   CRGs = CRGs
 )
 
-png("Res/venn/DEGsCRGs.png", height = 1600, width = 1700, res = 300)
+png("Res/venn/DEGsCRGs.png", height = 1600, width = 1600, res = 300)
 ggvenn(data = lstDEGsCRGs, 
        show_elements = FALSE, 
        show_percentage = FALSE,
        label_sep = "\n", 
        fill_color = c("blue", "red"),
        fill_alpha = 0.3,
-       text_size = 3.2,
+       text_size = 5,
        set_name_size = 4,
        text_color = "black",
        stroke_alpha = 0.5,
-       stroke_size = 0.1,
+       stroke_size = 0.3,
 )
 dev.off()
 

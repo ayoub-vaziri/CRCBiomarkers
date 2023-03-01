@@ -31,12 +31,10 @@ bio <- gsub(2, "C", bio)
 bio <- as.factor(bio)
 levels(bio) <- c("Tumor", "Normal")
 
-smps <- 1:52
+exprData <- expr
+bioData <- bio
 
-exprValid <- expr[,smps]
-bioValid <- bio[smps]
-
-tT <- degs(exprValid, bioValid)
+tT <- degs(exprData, bioData)
 tT$Gene.symbol <- rownames(tT)
 
 data <- tT %>% 
@@ -56,9 +54,9 @@ p <- ggplot(data, aes(logFC, -log10(adj.P.Val))) +
 data %>% 
   count(Sig)
 
-top_genes <- data[data$adj.P.Val < 1e-6 & abs(data$logFC) > 1.3, ]
+top_genes <- data[data$adj.P.Val < 1e-20 & abs(data$logFC) > 1.4, ]
 
-options(ggrepel.max.overlaps = 18)
+options(ggrepel.max.overlaps = 15)
 
 p <- p +
   geom_label_repel(data = top_genes,
@@ -68,8 +66,8 @@ p <- p +
 
 theme <- theme(strip.text.y = element_text(),
                axis.text = element_text(colour = "black", size=12),
-               axis.title.x = element_text(colour = "black", face="bold", size=12),
-               axis.title.y = element_text(colour = "black", face="bold", size=12),
+               axis.title.x = element_text(colour = "black", face="bold", size=14),
+               axis.title.y = element_text(colour = "black", face="bold", size=14),
                axis.text.x = element_text(colour = "black", size=12),
                legend.background = element_rect(fill = "white"),
                panel.grid.major = element_line(colour = "white"),
@@ -80,7 +78,7 @@ theme <- theme(strip.text.y = element_text(),
                panel.border=element_rect(colour="black",size=1.2),
                legend.key=element_blank())
 
-png("Res/volcano/volcano_validation_set.png", height = 2000, width = 2300, res = 300)
+png("Res/volcano/volcano.png", height = 2000, width = 2400, res = 300)
 p + theme
 dev.off()
 #########################################
