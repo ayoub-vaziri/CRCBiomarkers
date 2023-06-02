@@ -35,7 +35,7 @@ doMC::registerDoMC(cores = 2)
 rfPredictor = rfeControl(functions = rfFuncs, method = "cv", number = 10)
 
 rfeSelector <- rfe(x, y, 
-                   sizes = c(1:20), 
+                   sizes = 1:20,
                    rfeControl = rfPredictor
                    )
            
