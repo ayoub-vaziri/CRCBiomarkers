@@ -162,11 +162,11 @@ expr41328 <- na.omit(expr41328)
 expr74602 <- na.omit(expr74602)
 expr142279 <- na.omit(expr142279)
 
-write.csv(expr10950, "Res/exprBatchBioData/expr10950.csv")
-write.csv(expr25070, "Res/exprBatchBioData/expr25070.csv")
-write.csv(expr41328, "Res/exprBatchBioData/expr41328.csv")
-write.csv(expr74602, "Res/exprBatchBioData/expr74602.csv")
-write.csv(expr142279, "Res/exprBatchBioData/expr142279.csv")
+write.csv(expr10950, "Res/mergeDatasets/expr10950.csv")
+write.csv(expr25070, "Res/mergeDatasets/expr25070.csv")
+write.csv(expr41328, "Res/mergeDatasets/expr41328.csv")
+write.csv(expr74602, "Res/mergeDatasets/expr74602.csv")
+write.csv(expr142279, "Res/mergeDatasets/expr142279.csv")
 ######################
 
 #### Identifying biological classes ####
@@ -193,41 +193,41 @@ for(x in 1:nrow(phen142279)) {
 
 phen10950_ <- phen10950[,-2]
 rownames(phen10950_) <- NULL
-write.csv(phen10950_, "Res/exprBatchBioData/phen10950.csv")
+write.csv(phen10950_, "Res/mergeDatasets/phen10950.csv")
 
 phen25070_ <- as.data.frame(cbind(sample=rownames(phen25070), group=phen25070[,1]))
-write.csv(phen25070_, "Res/exprBatchBioData/phen25070.csv")
+write.csv(phen25070_, "Res/mergeDatasets/phen25070.csv")
 
 phen41328_ <- as.data.frame(cbind(sample=rownames(phen41328), group=phen41328[,8]))
-write.csv(phen41328_, "Res/exprBatchBioData/phen41328.csv")
+write.csv(phen41328_, "Res/mergeDatasets/phen41328.csv")
 
 phen74602_ <- as.data.frame(cbind(sample=rownames(phen74602), group=phen74602[,8]))
-write.csv(phen74602_, "Res/exprBatchBioData/phen74602.csv")
+write.csv(phen74602_, "Res/mergeDatasets/phen74602.csv")
 
 phen142279_ <- as.data.frame(cbind(sample=rownames(phen142279), group=phen142279[,36]))
-write.csv(phen142279_, "Res/exprBatchBioData/phen142279.csv")
+write.csv(phen142279_, "Res/mergeDatasets/phen142279.csv")
 ########################################
 
 
 #### Load expression data ####
 ##############################
-expr10950 <- as.data.frame(fread("Res/exprBatchBioData/expr10950.csv"))
+expr10950 <- as.data.frame(fread("Res/mergeDatasets/expr10950.csv"))
 rownames(expr10950) <- expr10950$V1
 expr10950 <- expr10950[,-1]
 
-expr25070 <- as.data.frame(fread("Res/exprBatchBioData/expr25070.csv"))
+expr25070 <- as.data.frame(fread("Res/mergeDatasets/expr25070.csv"))
 rownames(expr25070) <- expr25070$V1
 expr25070 <- expr25070[,-1]
 
-expr41328 <- as.data.frame(fread("Res/exprBatchBioData/expr41328.csv"))
+expr41328 <- as.data.frame(fread("Res/mergeDatasets/expr41328.csv"))
 rownames(expr41328) <- expr41328$V1
 expr41328 <- expr41328[,-1]
 
-expr74602 <- as.data.frame(fread("Res/exprBatchBioData/expr74602.csv"))
+expr74602 <- as.data.frame(fread("Res/mergeDatasets/expr74602.csv"))
 rownames(expr74602) <- expr74602$V1
 expr74602 <- expr74602[,-1]
 
-expr142279 <- as.data.frame(fread("Res/exprBatchBioData/expr142279.csv"))
+expr142279 <- as.data.frame(fread("Res/mergeDatasets/expr142279.csv"))
 rownames(expr142279) <- expr142279$V1
 expr142279 <- expr142279[,-1]
 
@@ -256,35 +256,35 @@ expr142279 <- t(expr142279) %>% as.data.frame()
 
 #### Load phenotypic data ####
 ##############################
-phen10950 <- as.data.frame(fread("Res/exprBatchBioData/phen10950.csv", header = TRUE))
+phen10950 <- as.data.frame(fread("Res/mergeDatasets/phen10950.csv", header = TRUE))
 phen10950 <- phen10950[,-1]
 expr10950 <- cbind(sample=rownames(expr10950), expr10950)
 expr10950 <- merge(phen10950, expr10950, by="sample")
 rownames(expr10950) <- expr10950$sample
 expr10950 <- expr10950[,-1]
 
-phen25070 <- as.data.frame(fread("Res/exprBatchBioData/phen25070.csv", header = TRUE))
+phen25070 <- as.data.frame(fread("Res/mergeDatasets/phen25070.csv", header = TRUE))
 phen25070 <- phen25070[,-1]
 expr25070 <- cbind(sample=rownames(expr25070), expr25070)
 expr25070 <- merge(phen25070, expr25070, by="sample")
 rownames(expr25070) <- expr25070$sample
 expr25070 <- expr25070[,-1]
 
-phen41328 <- as.data.frame(fread("Res/exprBatchBioData/phen41328.csv", header = TRUE))
+phen41328 <- as.data.frame(fread("Res/mergeDatasets/phen41328.csv", header = TRUE))
 phen41328 <- phen41328[,-1]
 expr41328 <- cbind(sample=rownames(expr41328), expr41328)
 expr41328 <- merge(phen41328, expr41328, by="sample")
 rownames(expr41328) <- expr41328$sample
 expr41328 <- expr41328[,-1]
 
-phen74602 <- as.data.frame(fread("Res/exprBatchBioData/phen74602.csv", header = TRUE))
+phen74602 <- as.data.frame(fread("Res/mergeDatasets/phen74602.csv", header = TRUE))
 phen74602 <- phen74602[,-1]
 expr74602 <- cbind(sample=rownames(expr74602), expr74602)
 expr74602 <- merge(phen74602, expr74602, by="sample")
 rownames(expr74602) <- expr74602$sample
 expr74602 <- expr74602[,-1]
 
-phen142279 <- as.data.frame(fread("Res/exprBatchBioData/phen142279.csv", header = TRUE))
+phen142279 <- as.data.frame(fread("Res/mergeDatasets/phen142279.csv", header = TRUE))
 phen142279 <- phen142279[,-1]
 expr142279 <- cbind(sample=rownames(expr142279), expr142279)
 expr142279 <- merge(phen142279, expr142279, by="sample")
@@ -308,5 +308,5 @@ mergedExpr$group <- as.numeric(mergedExpr$group)
 
 for(x in 3:ncol(mergedExpr)) mergedExpr[,x] <- as.numeric(mergedExpr[,x])
 
-write.csv(mergedExpr, "Res/exprBatchBioData/exprColorectal.csv")
+write.csv(mergedExpr, "Res/mergeDatasets/mergeDatasets.csv")
 ##########################
