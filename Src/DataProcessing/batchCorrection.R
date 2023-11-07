@@ -46,7 +46,6 @@ clrs <- c(
           rep("#66A61E",length(which(batchColorectal == 3))), 
           rep("#7570B3",length(which(batchColorectal == 4))),
           rep("#A6761D",length(which(batchColorectal == 5)))
-          # rep("#D95F02",length(which(batchColorectal == 6)))
           )
 
 
