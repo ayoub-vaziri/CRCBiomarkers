@@ -53,5 +53,5 @@ cnt <- cnt$`Closeness centrality (Latora)`
 cnt <- cnt[cnt > mean(cnt)]
 cnt <- rownames(as.data.frame(cnt))
 
-write.table(cnt, file = "centralityAnalysis/essentialNodes.txt", quote = F, row.names = F, col.names = F)
+write.table(cnt, file = "centralityAnalysis/keyNodes.txt", quote = F, row.names = F, col.names = F)
 #####################################
