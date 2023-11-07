@@ -5,7 +5,6 @@ library(pROC)
 library(MLmetrics)
 library(randomForest)
 library(e1071)
-library(glmnet)
 library(dplyr)
 
 setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
