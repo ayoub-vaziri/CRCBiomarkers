@@ -8,6 +8,8 @@ CRCTest is a diagnostic tool based on gene biomarkers for colorectal cancer diag
 if (!require("randomForest", quietly = T)) install.packages("randomForest")
 ```
 
+## Usage
+
 ```bash
 cd ~/
 mkdir CRC
@@ -16,11 +18,5 @@ cp YOUR_PATH/CRCTest/RF.rds .
 cp YOUR_PATH/CRCTest/RF.R .
 cp YOUR_PATH/CRCTest/CRCTest .
 chmod +x CRCTest
-```
-
-## Usage
-
-```bash
-cd ~/CRC/
 ./CRCTest
 ```
