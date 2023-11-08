@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Create a empty file
->~/CRC/exprData
+> ~/CRC/exprData
 
 echo "-------------------------------"
 echo -e "    Colorectal Cancer Test\n"
@@ -42,5 +41,4 @@ echo "Enter 'TRIB3' gene expression: "
 read TRIB3
 echo $TRIB3 >> ~/CRC/exprData
 
-Rscript ~/CRC/RF.R 
-
+Rscript ~/CRC/RF.R
