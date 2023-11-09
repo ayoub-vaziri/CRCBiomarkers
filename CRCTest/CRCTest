@@ -1,12 +1,12 @@
 #!/bin/bash
 
-> ~/CRC/exprData
-
 echo "-------------------------------"
 echo -e "    Colorectal Cancer Test\n"
 echo -e "           based on\n"
 echo -e "    Diagnostic Biomarkers"
-echo "-------------------------------" 
+echo "-------------------------------"
+
+> ~/CRC/exprData
 
 # Read the expression of biomarkers
 echo "Enter 'CDC25B' gene expression: "
