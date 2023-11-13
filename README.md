@@ -13,3 +13,10 @@ These codes were developed for the scientific paper titled 'Identifying novel di
 
 
 ## CRCTest 
+
+## Required software
+The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
+
+ - R (4.3.1)
+ - RStudio (2022.07.2+576): Optional, testing functions and running the code step-by-step.
+ - 
