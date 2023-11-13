@@ -18,4 +18,21 @@ The scripts use core R functionality and several publicly available R packages l
 
  - **R** (4.3.1)
  - **RStudio** (2022.07.2+576): Optional, testing functions and running the code step-by-step.
- - 
+ - **GEOquery** (2.68.0)
+ - **org.Hs.eg.db** (3.17.0)
+ - **EnsDb.Hsapiens.v79** (2.99.0)
+ - **ggplot2** (3.4.2)
+ - **sva** (3.48.0)
+ - **igraph** (1.5.0)
+ - **CINNA** (1.2.0)
+ - **ggraph** (2.1.0)
+ - **limma** (3.56.2)
+ - **clusterProfiler** (4.8.2)
+ - **CEMiTool** (1.24.0)
+ - **pheatmap** (1.0.12)
+ - **glmnet** (4.1.7)
+ - **pROC** (1.18.2)
+ - **MLmetrics** (1.1.1)
+ - **randomForest** (4.7.1.1)
+ - **caret** (6.0.94)
+ - **e1071** (1.7.13)
