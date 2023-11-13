@@ -15,8 +15,8 @@ This repository contains all the code necessary to reproduce the results in the 
    - Run *batchCorrection.R* to correct batch effects in merged datasets.
    - Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
- - **Codes/KeyGenes**
-   - Run *differentialExpressionAnalysis.R* 
+ - **Codes/KeyGenes** includes the required code for identifying key genes.
+   - Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs).
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
