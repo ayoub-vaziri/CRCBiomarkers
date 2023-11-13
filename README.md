@@ -11,7 +11,7 @@ The files are organised into four folders:
 ## Reproducing the results
 This repository contains all the code necessary to reproduce the results in the paper:
  - **Codes/DataProcessing** contains the code necessary to pre-process dataset.
-   *Run* _mergeDatasets.R_ to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
+   - Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
 
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
