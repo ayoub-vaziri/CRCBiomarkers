@@ -27,7 +27,7 @@ This repository contains all the code necessary to reproduce the results in the 
    - Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
    - Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
    - Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
-   - Run *externalTesting.R* to ensure the accuracy of diagnostic genes using two external datasets (GSE21815 and GSE106582).
+   - Run *externalTesting.R* to further verify the accuracy of diagnostic genes using two external datasets (GSE21815 and GSE106582).
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
