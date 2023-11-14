@@ -1,6 +1,6 @@
 # CRCTest
 
-**CRCTest is a diagnostic tool based on gene biomarkers for colorectal cancer diagnosis**
+**CRCTest is a diagnostic tool based on gene biomarkers for colorectal cancer diagnosis.**
 
 ## Installation
 
