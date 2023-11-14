@@ -17,6 +17,8 @@ if (!require("randomForest", quietly = T))
 
 ## Usage
 
+Please make sure to replace YOUR_PATH with the actual path where the files are located. Additionally, ensure that the specified files exist in the provided paths.
+
 ```bash
 cd ~/
 mkdir CRC
