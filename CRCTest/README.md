@@ -4,6 +4,8 @@
 
 ## Installation
 
+The provided code in R checks whether the "randomForest" package is installed. If it's not installed, it proceeds to install it using the install.packages function. Here's the code:
+
 ```R
 if (!require("randomForest", quietly = T)) 
 	install.packages("randomForest")
