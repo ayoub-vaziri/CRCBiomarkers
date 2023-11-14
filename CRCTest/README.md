@@ -23,9 +23,9 @@ Please make sure to replace YOUR_PATH with the actual path where the files are l
 cd ~/
 mkdir CRC
 cd CRC/
-cp YOUR_PATH/CRCTest/RF.rds .
-cp YOUR_PATH/CRCTest/RF.R .
-cp YOUR_PATH/CRCTest/CRCTest .
+cp YOUR_PATH/RF.rds .
+cp YOUR_PATH/RF.R .
+cp YOUR_PATH/CRCTest .
 chmod +x CRCTest
 ./CRCTest
 ```
