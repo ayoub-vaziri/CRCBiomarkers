@@ -9,14 +9,24 @@ The files are organised into four folders:
  - *CRCTest*: contains a trained random forest model and code for diagnosing tumor samples from normal samples.
 
 ## Reproducing the results
-This repository contains all the code necessary to reproduce the results in the paper:
+This repository contains all the code necessary to reproduce the results in the paper. In particular:
  - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
    - Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
    - Run *batchCorrection.R* to correct batch effects in merged datasets.
    - Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
  - **Codes/KeyGenes** includes the required code for identifying key genes.
-   - Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs).
+   - Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
+   - Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
+   - Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
+   - Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
+   - Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
+   
+ - **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
+   - Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
+   - Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
+   - Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
+   - Run *trainEvaluateML.R* 
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
