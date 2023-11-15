@@ -5,7 +5,7 @@ library(ggraph)
 library(graphlayouts)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 #### Centrality measure analysis ####
 #####################################
