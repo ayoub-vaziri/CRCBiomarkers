@@ -6,11 +6,12 @@ library(dplyr)
 
 set.seed(123)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### Load and process train data ####
 #####################################
-trainSet <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
+trainSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 
 trainGroup <- trainSet$group
 
@@ -18,7 +19,7 @@ rownames(trainSet) <- trainSet$V1
 
 trainData <- trainSet[,-c(1,2)]
 
-keyGenes <- fread("Res/centralityAnalysis/keyGenes.txt", header = FALSE)$V1
+keyGenes <- fread("Results/KeyGenes/centralityAnalysis/keyGenes.txt", header = FALSE)$V1
 
 trainData <- trainData[,which(colnames(trainData) %in% keyGenes)]
 
@@ -43,12 +44,12 @@ cv.lasso <- cv.glmnet(x, y,
                       type.measure = "deviance",
                       nfolds = 10)
 
-png(filename = "Res/LASSO/Lambda_BinomialDeviance.png",
+png(filename = "Results/DiagnosticGenes/LASSO/Lambda_BinomialDeviance.png",
     width = 1800, height = 1800, res = 300)
 plot(cv.lasso)
 dev.off()
 
-write.table(cv.lasso$lambda.min, "Res/LASSO/lambda_min.txt", quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(cv.lasso$lambda.min, "Results/DiagnosticGenes/LASSO/lambda_min.txt", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 # Final model with lambda.min
 lasso.model <- glmnet(x, as.factor(y),
@@ -61,11 +62,11 @@ lasso.model <- glmnet(x, as.factor(y),
 beta <- lasso.model$beta[,1]
 coef.nonzero <- beta[which(beta != 0)]
 df.coef.nonzero <- data.frame(gene=names(coef.nonzero), coefficient=unname(coef.nonzero))
-write.csv(df.coef.nonzero, "Res/LASSO/coefficients.csv")
+write.csv(df.coef.nonzero, "Results/DiagnosticGenes/LASSO/coefficients.csv")
 
 beta.nonzero <- names(which(beta != 0))
 write.table(x = beta.nonzero,
-            file = "Res/LASSO/lassoGenes.txt",
+            file = "Results/DiagnosticGenes/LASSO/lassoGenes.txt",
             quote = FALSE,
             sep = "\t",
             row.names = FALSE,
@@ -78,7 +79,7 @@ rownames(dat) <- NULL
 
 beta <- as.numeric(union(substr(dat$Beta[1], 1, 6), substr(dat$Beta[c(2:10)], 1, 5)))
 
-png("Res/LASSO/nonZeroCoefGenes.png", width = 1600, height = 1400, res = 300)
+png("Results/DiagnosticGenes/LASSO/nonZeroCoefGenes.png", width = 1600, height = 1400, res = 300)
 dat %>% 
   arrange(Beta) %>% 
   mutate(Gene = factor(Gene, levels=dat$Gene)) %>% 
