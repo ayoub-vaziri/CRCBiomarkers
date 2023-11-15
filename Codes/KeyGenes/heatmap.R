@@ -2,11 +2,12 @@ library(data.table)
 library(pheatmap)
 library(dplyr)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### Heat map for validation set ####
 #####################################
-expr <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
+expr <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 bio <- expr$group
 
 # Gene_sample heatmap
@@ -22,7 +23,7 @@ levels(bio) <- c("Tumor", "Normal")
 exprData <- expr
 bioData <- bio
 
-DEGs <- fread("Res/differentialExpressionAnalysis/updown.txt", header = FALSE)$V1
+DEGs <- fread("Results/KeyGenes/differentialExpressionAnalysis/updown.txt", header = FALSE)$V1
 
 data1 <- exprData[DEGs,] %>% na.omit()
 data1 <- as.data.frame(t(scale(t(data1))))
@@ -35,8 +36,8 @@ t <- rownames(samples)[which(samples$Group == "Tumor")]
 
 col_order <- c(n, t)
 
-upgenes <- read.table("Res/differentialExpressionAnalysis/up.txt")
-downgenes <- read.table("Res/differentialExpressionAnalysis/down.txt")
+upgenes <- read.table("Results/KeyGenes/differentialExpressionAnalysis/up.txt")
+downgenes <- read.table("Results/KeyGenes/differentialExpressionAnalysis/down.txt")
 
 colnames(upgenes) <- "gene"
 colnames(downgenes) <- "gene"
@@ -66,7 +67,7 @@ p <- pheatmap(data1[, col_order],
               fontsize_col = 6
 )
 
-png("Res/heatmap/heatmap.png", height = 2500, width = 3200, res = 300)
+png("Results/KeyGenes/heatmap/heatmap.png", height = 2500, width = 3200, res = 300)
 p
 dev.off()
 #####################################
