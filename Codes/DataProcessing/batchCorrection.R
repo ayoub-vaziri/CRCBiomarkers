@@ -5,7 +5,7 @@ library(sva)
 library(preprocessCore)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 #### Load data ####
 ###################
