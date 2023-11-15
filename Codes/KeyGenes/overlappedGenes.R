@@ -2,7 +2,7 @@ library(ggvenn)
 library(data.table)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 degs <- fread("Results/KeyGenes/differentialExpressionAnalysis/updown.txt", header = FALSE)$V1
 modules <- fread("Results/KeyGenes/geneCoexpressionAnalysis/modulesGenes.txt", header = FALSE)$V1

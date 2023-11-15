@@ -3,7 +3,7 @@ library(pheatmap)
 library(dplyr)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 #### Heat map for validation set ####
 #####################################

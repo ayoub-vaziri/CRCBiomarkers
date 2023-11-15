@@ -6,7 +6,7 @@ library(AnnotationDbi)
 library(org.Hs.eg.db)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 symbol <- fread("Results/KeyGenes/differentialExpressionAnalysis/updown.txt", header = F)$V1
 

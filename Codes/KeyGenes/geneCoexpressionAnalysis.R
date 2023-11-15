@@ -1,11 +1,12 @@
 library(data.table)
 library(CEMiTool)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd(project_path)
 
 #### Load and process data ####
 ###############################
-trainingSet <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
+trainingSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 
 exprData <- trainingSet
 phenData <- trainingSet$group
