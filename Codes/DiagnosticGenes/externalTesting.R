@@ -2,8 +2,101 @@ library(MLmetrics)
 library(pROC)
 library(randomForest)
 library(caret)
+library(data.table)
+library(GEOquery)
+library(dplyr)
+library(preprocessCore)
 
 setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+
+#### Load and process external testing dataset ####
+###################################################
+
+gse21815 <- getGEO("GSE21815", destdir = "Data/")
+gse106582 <- getGEO("GSE106582", destdir = "Data/")
+
+gse21815 <- gse21815[[1]]
+gse106582 <- gse106582[[1]]
+
+expr21815 <- exprs(gse21815)
+expr106582 <- exprs(gse106582)
+
+feat21815 <- fData(gse21815)
+feat106582 <- fData(gse106582)
+
+phen21815 <- pData(gse21815)
+phen106582 <- pData(gse106582)
+
+expr21815 <- cbind(ID=rownames(expr21815), expr21815)
+expr106582 <- cbind(ID=rownames(expr106582), expr106582)
+
+feat21815 <- cbind(ID=feat21815$ID, symbol=feat21815$GENE_SYMBOL)
+feat106582 <- cbind(ID=feat106582$ID, symbol=feat106582$Symbol)
+
+expr21815 <- merge(feat21815, expr21815, by="ID")
+expr106582 <- merge(feat106582, expr106582, by="ID")
+
+rownames(expr21815) <- expr21815$ID
+rownames(expr106582) <- expr106582$ID
+
+expr21815 <- expr21815[,-1]
+expr106582 <- expr106582[,-1]
+
+lassoGenes <- fread("Res/LASSO/lassoGenes.txt", header = FALSE)$V1
+lassoGenes <- sort(lassoGenes)
+biomarkers <- lassoGenes[-c(3,10)]
+
+expr21815 <- expr21815[which(expr21815$symbol %in% biomarkers),]
+expr106582 <- expr106582[which(expr106582$symbol %in% biomarkers),]
+
+rownames(expr21815) <- NULL
+rownames(expr106582) <- NULL
+
+expr21815 <- expr21815[!duplicated(expr21815$symbol),]
+expr106582 <- expr106582[!duplicated(expr106582$symbol),]
+
+rownames(expr21815) <- expr21815$symbol
+rownames(expr106582) <- expr106582$symbol
+
+expr21815 <- expr21815[,-1]
+expr106582 <- expr106582[,-1]
+
+expr21815 <- as.data.frame(t(expr21815))
+expr106582 <- as.data.frame(t(expr106582))
+
+expr21815 <- expr21815[,biomarkers]
+expr106582 <- expr106582[,biomarkers]
+
+for (j in 1:ncol(expr21815)) expr21815[,j] <- as.numeric(expr21815[,j])
+for (j in 1:ncol(expr106582)) expr106582[,j] <- as.numeric(expr106582[,j])
+
+expr21815 <- na.omit(expr21815)
+expr106582 <- na.omit(expr106582)
+
+expr21815 <- cbind(sample=rownames(expr21815), expr21815)
+expr106582 <- cbind(sample=rownames(expr106582), expr106582)
+
+phen21815 <- cbind(sample=rownames(phen21815), phen21815)
+phen106582 <- cbind(sample=rownames(phen106582), phen106582)
+
+phen21815 <- cbind(sample=phen21815[,"sample"], group=phen21815[,9]) %>% as.data.frame()
+phen106582 <- cbind(sample=phen106582[,"sample"], group=phen106582[,37]) %>% as.data.frame()
+
+phen21815$group <- gsub("colorectal cancer", "Tumor", phen21815$group)
+phen21815$group <- gsub("normal epithelium", "Normal", phen21815$group)
+
+phen106582$group <- gsub("tumor", "Tumor", phen106582$group)
+phen106582$group <- gsub("mucosa", "Normal", phen106582$group)
+
+expr21815 <- merge(phen21815, expr21815, by="sample")
+expr106582 <- merge(phen106582, expr106582, by="sample")
+
+rownames(expr21815) <- expr21815$sample
+rownames(expr106582) <- expr106582$sample
+
+expr21815 <- expr21815[,-1]
+expr106582 <- expr106582[,-1]
+###################################################
 
 #### ML models evaluation ####
 ##############################
@@ -23,7 +116,6 @@ log2trans <- function(expr) {
 }
 
 pred <- function(exprData, model) {
-  x <- log2trans(exprData)
   y.pred <- as.character(predict(model, x))
   y.prob <- as.data.frame(predict(model, x, type = "prob"))
   return(list(y.pred, y.prob))
@@ -77,16 +169,10 @@ svm.metrics <- function(x, y, accession, model) {
 
 #### Evaluation of ML models on external testing set ####
 #########################################################
-gse21815 <- as.data.frame(fread("Res/externalTesting/GSE21815.csv"))
-rownames(gse21815) <- gse21815$V1
-gse21815 <- gse21815[,-1]
-gse21815[,-1] <- log2(gse21815[,-1]+1)
+expr21815[,-1] <- log2trans(expr21815[,-1])
+expr106582[,-1] <- log2trans(expr106582[,-1])
 
-gse106582 <- as.data.frame(fread("Res/externalTesting/GSE106582.csv"))
-rownames(gse106582) <- gse106582$V1
-gse106582 <- gse106582[,-1]
-
-mergedData <- rbind(gse21815, gse106582)
+mergedData <- rbind(expr21815, expr106582)
 
 x <- mergedData[,-1]
 y <- mergedData[,1]
