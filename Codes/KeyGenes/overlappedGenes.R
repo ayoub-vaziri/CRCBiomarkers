@@ -1,17 +1,18 @@
 library(ggvenn)
 library(data.table)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
-degs <- fread("Res/differentialExpressionAnalysis/updown.txt", header = FALSE)$V1
-modules <- fread("Res/geneCoexpressionAnalysis/modulesGenes.txt", header = FALSE)$V1
+degs <- fread("Results/KeyGenes/differentialExpressionAnalysis/updown.txt", header = FALSE)$V1
+modules <- fread("Results/KeyGenes/geneCoexpressionAnalysis/modulesGenes.txt", header = FALSE)$V1
 
 lstDegsModules <- list(
   DEGs = degs,
   M1 = modules
 )
 
-png("Res/overlappedGenes/overlappedGenes.png", height = 1600, width = 1600, res = 300)
+png("Results/KeyGenes/overlappedGenes/overlappedGenes.png", height = 1600, width = 1600, res = 300)
 ggvenn(data = lstDegsModules, 
        show_elements = FALSE, 
        show_percentage = FALSE,
@@ -27,4 +28,4 @@ ggvenn(data = lstDegsModules,
 dev.off()
 
 overlappedGenes <- intersect(degs, modules)
-write.table(overlappedGenes, file = "Res/overlappedGenes/overlappedGenes.txt", quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(overlappedGenes, file = "Results/KeyGenes/overlappedGenes/overlappedGenes.txt", quote = FALSE, row.names = FALSE, col.names = FALSE)
