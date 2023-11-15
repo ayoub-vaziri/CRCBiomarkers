@@ -7,14 +7,15 @@ library(randomForest)
 library(e1071)
 library(dplyr)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 set.seed(123)
 
 #### Load and process train data ####
 #####################################
-trainSet <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
-testSet <- as.data.frame(fread("Res/trainTestSplit/testing_set.csv"))
+trainSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
+testSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/testing_set.csv"))
 
 trainGroup <- trainSet$group
 testGroup <- testSet$group
@@ -25,7 +26,7 @@ rownames(testSet) <- testSet$V1
 trainData <- trainSet[,-c(1,2)]
 testData <- testSet[,-c(1,2)]
 
-lassoGenes <- fread("Res/LASSO/lassoGenes.txt", header = FALSE)$V1
+lassoGenes <- fread("Results/DiagnosticGenes/LASSO/lassoGenes.txt", header = FALSE)$V1
 lassoGenes <- sort(lassoGenes)
 biomarkers <- lassoGenes[-c(3,10)]
 
@@ -49,7 +50,7 @@ test <- cbind(group=testGroup, testData)
 ###################
 roc.curve <- function(rocs, cols, main, mods) {
   
-  png(paste0("Res/trainEvaluateML/roc", main ,".png"), width = 1800, height = 1800, res = 300)
+  png(paste0("Results/DiagnosticGenes/trainEvaluateML/roc", main ,".png"), width = 1800, height = 1800, res = 300)
   
   plot.roc(rocs[[1]],
            col=cols[1],
@@ -104,7 +105,7 @@ rf.train.group.prob <- as.data.frame(predict(best.rf, train[,-1], type = "prob")
 rf.train.roc <- roc(rf.train.group.true ~ as.numeric(rf.train.group.prob$Tumor))
 
 rf.train.cm <- confusionMatrix(rf.train.group.true, rf.train.group.pred, positive = "Tumor")
-write.csv(rf.train.cm$table, "Res/trainEvaluateML/rf.train.confusion.matrix.csv")
+write.csv(rf.train.cm$table, "Results/DiagnosticGenes/trainEvaluateML/rf.train.confusion.matrix.csv")
 
 rf.train.group.true <- as.numeric(rf.train.group.true)
 rf.train.group.pred <- as.numeric(rf.train.group.pred)
@@ -118,7 +119,7 @@ rf.train.matrics <- data.frame("AUC"=rf.train.roc$auc[1],
                          "f1score"=F1_Score(rf.train.group.true, rf.train.group.pred, positive = 2)
                          )
 
-write.csv(rf.train.matrics, "Res/trainEvaluateML/rf.train.matrics.csv")
+write.csv(rf.train.matrics, "Results/DiagnosticGenes/trainEvaluateML/rf.train.matrics.csv")
 
 
 # Macke prediction on test data
@@ -129,7 +130,7 @@ rf.test.group.prob <- as.data.frame(predict(best.rf, test[,-1], type = "prob"))
 rf.test.roc <- roc(rf.test.group.true ~ as.numeric(rf.test.group.prob$Tumor))
 
 rf.test.cm <- confusionMatrix(rf.test.group.true, rf.test.group.pred, positive = "Tumor")
-write.csv(rf.test.cm$table, "Res/trainEvaluateML/rf.test.confusion.matrix.csv")
+write.csv(rf.test.cm$table, "Results/DiagnosticGenes/trainEvaluateML/rf.test.confusion.matrix.csv")
 
 rf.test.group.true <- as.numeric(rf.test.group.true)
 rf.test.group.pred <- as.numeric(rf.test.group.pred)
@@ -143,7 +144,7 @@ rf.test.matrics <- data.frame("AUC"=rf.test.roc$auc[1],
                               "f1score"=F1_Score(rf.test.group.true, rf.test.group.pred, positive = 2)
 )
 
-write.csv(rf.test.matrics, "Res/trainEvaluateML/rf.test.matrics.csv")
+write.csv(rf.test.matrics, "Results/DiagnosticGenes/trainEvaluateML/rf.test.matrics.csv")
 #######################
 
 
@@ -175,7 +176,7 @@ svm.train.group.prob <- as.data.frame(attr(predict(svm.fit, newdata = train[,-1]
 svm.train.roc <- roc(svm.train.group.true ~ as.numeric(svm.train.group.prob$Tumor))
 
 svm.train.cm <- table(svm.train.group.true, svm.train.group.pred)
-write.csv(svm.train.cm, "Res/trainEvaluateML/svm.train.confusion.matrix.csv")
+write.csv(svm.train.cm, "Results/DiagnosticGenes/trainEvaluateML/svm.train.confusion.matrix.csv")
 
 
 svm.train.matrics <- data.frame("AUC"=svm.train.roc$auc[1],
@@ -187,7 +188,7 @@ svm.train.matrics <- data.frame("AUC"=svm.train.roc$auc[1],
                                "f1score"=F1_Score(svm.train.group.true, svm.train.group.pred, positive = "Tumor")
 )
 
-write.csv(svm.train.matrics, "Res/trainEvaluateML/svm.train.matrics.csv")
+write.csv(svm.train.matrics, "Results/DiagnosticGenes/trainEvaluateML/svm.train.matrics.csv")
 
 
 # Macke prediction on test data
@@ -198,7 +199,7 @@ svm.test.group.prob <- as.data.frame(attr(predict(svm.fit, newdata = test[,-1], 
 svm.test.roc <- roc(svm.test.group.true ~ as.numeric(svm.test.group.prob$Tumor))
 
 svm.test.cm <- table(svm.test.group.true, svm.test.group.pred)
-write.csv(svm.test.cm, "Res/trainEvaluateML/svm.test.confusion.matrix.csv")
+write.csv(svm.test.cm, "Results/DiagnosticGenes/trainEvaluateML/svm.test.confusion.matrix.csv")
 
 svm.test.matrics <- data.frame("AUC"=svm.test.roc$auc[1],
                                "accuracy"=Accuracy(svm.test.group.pred, svm.test.group.true),
@@ -209,21 +210,12 @@ svm.test.matrics <- data.frame("AUC"=svm.test.roc$auc[1],
                                "f1score"=F1_Score(svm.test.group.true, svm.test.group.pred, positive = "Tumor")
 )
 
-write.csv(svm.test.matrics, "Res/trainEvaluateML/svm.test.matrics.csv")
+write.csv(svm.test.matrics, "Results/DiagnosticGenes/trainEvaluateML/svm.test.matrics.csv")
 ################################
 
 
-#### ROC plot ####
-##################
-#cols <- c("red", "blue")
-#mods <- c("RF", "SVM")
-
-#rocs.train <- list(rf.train.roc, svm.train.roc)
-#roc.curve(rocs.train, cols, "Train group", mods)
-
-#rocs.test <- list(rf.test.roc, svm.test.roc)
-#roc.curve(rocs.test, cols, "Test group", mods)
-
-saveRDS(best.rf, "Res/trainEvaluateML/RF.rds")
-saveRDS(svm.fit, "Res/trainEvaluateML/SVM.rds")
-##################
+#### Save trained models ####
+#############################
+saveRDS(best.rf, "Results/DiagnosticGenes/trainEvaluateML/RF.rds")
+saveRDS(svm.fit, "Results/DiagnosticGenes/trainEvaluateML/SVM.rds")
+#############################
