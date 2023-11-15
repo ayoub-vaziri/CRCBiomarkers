@@ -4,11 +4,12 @@ library(ggplot2)
 library(sva)
 library(preprocessCore)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd(project_path)
 
 #### Load data ####
 ###################
-exprColorectal <- as.data.frame(fread("Res/mergeDatasets/mergeDatasets.csv")) 
+exprColorectal <- as.data.frame(fread("Results/DataProcessing/mergeDatasets/mergeDatasets.csv")) 
 rownames(exprColorectal) <- exprColorectal$V1
 exprColorectal <- exprColorectal[,-1]
 
@@ -97,9 +98,9 @@ tdat <- data.frame(sdat[,1:2], grps[batchColorectal], type[groupColorectal])
 colnames(tdat)<-c("PC-1","PC-2","Batch","Group")
 rownames(tdat)<-rownames(exprColorectal)
 
-write.table(tdat,paste0("Res/batchCorrection/pca_Before_Correction.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.table(tdat,paste0("Results/DataProcessing/batchCorrection/pca_Before_Correction.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 
-png("Res/batchCorrection/pca_Before_Correction.png", width = 2600, height = 2000, res = 300)
+png("Results/DataProcessing/batchCorrection/pca_Before_Correction.png", width = 2600, height = 2000, res = 300)
 fig(sdat, groupColorectal, clrs, pca.var.per.before)
 dev.off()
 ###############################
@@ -117,8 +118,8 @@ combatres <- ComBat(
 combatres_ <- as.data.frame(cbind(sample=rownames(t(combatres)), t(combatres)))
 combatres_ <- merge(batchGroup, combatres_, by="sample")
 
-write.csv(combatres_, "Res/batchCorrection/corrected_exprColorectal.csv")
-write.table(combatres_, paste0("Res/batchCorrection/corrected_exprColorectal.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.csv(combatres_, "Results/DataProcessing/batchCorrection/corrected_exprColorectal.csv")
+write.table(combatres_, paste0("Results/DataProcessing/batchCorrection/corrected_exprColorectal.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 #################################
 
 #### PCA on combat batch corrected ####
@@ -136,9 +137,9 @@ tdat <- data.frame(sdat[,1:2], grps[batchColorectal], type[groupColorectal])
 colnames(tdat)<-c("PC-1","PC-2","Batch","Group")
 rownames(tdat)<-rownames(exprColorectal)
 
-write.table(tdat,paste0("Res/batchCorrection/pca_After_Correction.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.table(tdat,paste0("Results/DataProcessing/batchCorrection/pca_After_Correction.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 
-png("Res/batchCorrection/pca_After_Correction.png", width = 2600, height = 2000, res = 300)
+png("Results/DataProcessing/batchCorrection/pca_After_Correction.png", width = 2600, height = 2000, res = 300)
 fig(sdat, groupColorectal, clrs, pca.var.per.after)
 dev.off()
 #######################################
