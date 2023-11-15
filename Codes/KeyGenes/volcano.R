@@ -4,7 +4,8 @@ library(ggrepel)
 library(dplyr)
 library(readr)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd(project_path)
 
 #### Volcano plot for validation set ####
 #########################################
@@ -19,7 +20,7 @@ degs <- function(expr, group) {
   return(toptable)
 }
 
-expr <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
+expr <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 bio <- expr$group
 
 rownames(expr) <- expr$V1
@@ -78,7 +79,7 @@ theme <- theme(strip.text.y = element_text(),
                panel.border=element_rect(colour="black",size=1.2),
                legend.key=element_blank())
 
-png("Res/volcano/volcano.png", height = 2000, width = 2400, res = 300)
+png("Results/KeyGenes/volcano/volcano.png", height = 2000, width = 2400, res = 300)
 p + theme
 dev.off()
 #########################################
