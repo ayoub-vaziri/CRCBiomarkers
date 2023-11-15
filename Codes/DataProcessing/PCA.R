@@ -2,7 +2,7 @@ library(data.table)
 library(factoextra)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 #### PCA plot for validation set ####
 #####################################
