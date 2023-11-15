@@ -16,11 +16,11 @@ This repository contains all the code necessary to reproduce the results in the 
    1. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
  - **Codes/KeyGenes** includes the required code for identifying key genes.
-   4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
-   4. Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
-   4. Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
-   4. Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
-   4. Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
+   1. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
+   1. Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
+   1. Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
+   1. Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
+   1. Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
    
  - **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
    9. Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
