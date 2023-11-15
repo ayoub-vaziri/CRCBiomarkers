@@ -2,7 +2,8 @@ library(limma)
 library(readr)
 library(data.table)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### Differential expression analysis ####
 ##########################################
@@ -33,21 +34,21 @@ degs <- function(expr, group) {
 # Find up & down regulated genes
 updown <- function(tT) {
   up.regulated <- subset(tT, adj.P.Val < 0.05 & logFC > 1)
-  write_tsv(up.regulated, "Res/differentialExpressionAnalysis/topTable.up.tsv")
+  write_tsv(up.regulated, "Results/KeyGenes/differentialExpressionAnalysis/topTable.up.tsv")
   
   down.regulated <- subset(tT, adj.P.Val < 0.05 & logFC < -1)
-  write_tsv(down.regulated, "Res/differentialExpressionAnalysis/topTable.down.tsv")
+  write_tsv(down.regulated, "Results/KeyGenes/differentialExpressionAnalysis/topTable.down.tsv")
 
   up <- unique(up.regulated$Gene.symbol)
   down <- unique(down.regulated$Gene.symbol)
   updown <- union(up,down)
   
-  write.table(up, "Res/differentialExpressionAnalysis/up.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
-  write.table(down, "Res/differentialExpressionAnalysis/down.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
-  write.table(updown, "Res/differentialExpressionAnalysis/updown.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(up, "Results/KeyGenes/differentialExpressionAnalysis/up.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(down, "Results/KeyGenes/differentialExpressionAnalysis/down.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  write.table(updown, "Results/KeyGenes/differentialExpressionAnalysis/updown.txt", row.names = FALSE, col.names = FALSE, quote = FALSE)
 }
 
-trainingSet <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
+trainingSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 
 group <- trainingSet$group
 group <- gsub(1, "N", group)
@@ -66,8 +67,8 @@ tT$`Gene.symbol` <- rownames(tT)
 tT <- tT[, c("Gene.symbol", "logFC", "P.Value", "adj.P.Val")]
 rownames(tT) <- NULL
 
-write_tsv(tT, "Res/differentialExpressionAnalysis/topTable.tsv")
-write_csv(tT, "Res/differentialExpressionAnalysis/topTable.csv")
+write_tsv(tT, "Results/KeyGenes/differentialExpressionAnalysis/topTable.tsv")
+write_csv(tT, "Results/KeyGenes/differentialExpressionAnalysis/topTable.csv")
 
 updown(tT)
 ##########################################
