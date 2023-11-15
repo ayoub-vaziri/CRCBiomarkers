@@ -2,11 +2,12 @@ library(dplyr)
 library(ggpubr)
 library(data.table)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### Boxplot for test data ####
 #####################################
-testingSet <- as.data.frame(fread("Res/trainTestSplit/testing_set.csv"))
+testingSet <- as.data.frame(fread("Results/DiagnosticGenes/trainTestSplit/testing_set.csv"))
 
 rownames(testingSet) <- testingSet$V1
 group <- testingSet$group
@@ -14,7 +15,7 @@ group <- as.factor(group)
 levels(group) <- c("Normal", "Tumor")
 testingSet <- testingSet[,-c(1,2)]
 
-lassoGenes <- fread("Res/LASSO/lassoGenes.txt", header = FALSE)$V1
+lassoGenes <- fread("Results/DiagnosticGenes/LASSO/lassoGenes.txt", header = FALSE)$V1
 lassoGenes <- sort(lassoGenes)
 lassoGenes <- lassoGenes[-c(3,10)]
 
@@ -40,7 +41,7 @@ Map(function(x, y, z) {
           legend.text = element_text(size=15)) 
 }, cols, y_labels, LETTERS[1:8]) -> list_plots
 
-png(filename = "Res/boxplot/boxplot_test.png", width = 4500, height = 3000, res = 300)
+png(filename = "Results/DiagnosticGenes/boxplot/boxplot_test.png", width = 4500, height = 3000, res = 300)
 ggarrange(plotlist = list_plots, common.legend = TRUE, ncol = 4, nrow = 2) 
 dev.off()
 #####################################
