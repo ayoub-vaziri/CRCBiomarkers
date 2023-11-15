@@ -84,8 +84,6 @@ dat %>%
   arrange(Beta) %>% 
   mutate(Gene = factor(Gene, levels=dat$Gene)) %>% 
   ggplot(aes(fill=ifelse(Beta > 0, 1, "#1F77B4"), y=Beta, x=Gene)) + 
-  # fill=ifelse(Beta > 0, "#1F77B4", 1)
-  # fill=Gene
   geom_bar(stat="identity", width = 0.85) +
   geom_text(stat='identity', aes(label=beta), vjust=ifelse(beta>0,-0.4,1.3), position = position_dodge2(width = 0.6), size=3) +
   theme_bw() +
@@ -95,6 +93,5 @@ dat %>%
         axis.text.x = element_text(colour = "black", angle = 45, hjust = 1, size = 10),
         axis.text.y = element_text(colour = "black", size = 10),
         legend.position = "none") 
-  # geom_text(aes(label=signif(Beta, 3)), vjust = ifelse(dat$Beta > 0, -0.5, 1.2), size = 2)
 dev.off()
 ##########################
