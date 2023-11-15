@@ -1,5 +1,4 @@
 library(data.table)
-library(DOSE)
 library(clusterProfiler)
 library(enrichplot)
 library(dplyr)
