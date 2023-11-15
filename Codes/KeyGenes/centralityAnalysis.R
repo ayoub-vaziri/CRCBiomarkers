@@ -4,7 +4,8 @@ library(CINNA)
 library(ggraph)
 library(graphlayouts)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/Res/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### Centrality measure analysis ####
 #####################################
@@ -13,7 +14,7 @@ setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/Res/")
 giant.comp <- function(g) giant_component_extract(g)[[1]]
 
 # Creating PPI network
-interactions <- read_tsv("centralityAnalysis/string_interactions_short.tsv")
+interactions <- read_tsv("Results/KeyGenes/centralityAnalysis/string_interactions_short.tsv")
 
 edges <- data.frame(node1=interactions$`#node1`, 
                     node2=interactions$node2, 
@@ -21,8 +22,8 @@ edges <- data.frame(node1=interactions$`#node1`,
 
 nodes <- union(edges$node1, edges$node2)
 
-write.csv(edges, "centralityAnalysis/edges.csv")
-write.csv(as.data.frame(nodes), "centralityAnalysis/nodes.csv")
+write.csv(edges, "Results/KeyGenes/centralityAnalysis/edges.csv")
+write.csv(as.data.frame(nodes), "Results/KeyGenes/centralityAnalysis/nodes.csv")
 
 ppi <- giant.comp(simplify(graph_from_data_frame(d = edges, vertices = nodes, directed = FALSE)))
 
@@ -31,13 +32,13 @@ prop_cent <- proper_centralities(ppi)
 
 calc_cent <- calculate_centralities(ppi, include = prop_cent[c(1:5, 7:17, 19:26, 28, 32, 34:36, 40:42, 44:49)])
 
-png("centralityAnalysis/pca_centralities.png", height = 2200, width = 2600, res = 300)
+png("Results/KeyGenes/centralityAnalysis/pca_centralities.png", height = 2600, width = 2600, res = 300)
 options(repr.plot.width = 200, repr.plot.height = 100)
 pca <- pca_centralities(calc_cent)
 pca + 
-  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5, size = 9),
-        axis.title.x = element_text(size = 14),
-        axis.title.y = element_text(size = 14),
+  theme(axis.text.x = element_text(angle=90, hjust=1, vjust=0.5, size = 13, face = "bold"),
+        axis.title.x = element_text(size = 16),
+        axis.title.y = element_text(size = 16),
         plot.margin = margin(rep(15, 4)))
 dev.off()
 
@@ -45,7 +46,7 @@ pca_data <- pca$data
 pca_data <- pca_data[order(pca_data$contrib, decreasing = TRUE),]
 rownames(pca_data) <- NULL
 colnames(pca_data) <- c("Centrality measure", "Contribution")
-write.csv(pca_data, "centralityAnalysis/pca_centrality_data.csv")
+write.csv(pca_data, "Results/KeyGenes/centralityAnalysis/pca_centrality_data.csv")
 
 measure <- "Closeness centrality (Latora)"
 cnt <- calculate_centralities(ppi, include = measure)
@@ -53,5 +54,5 @@ cnt <- cnt$`Closeness centrality (Latora)`
 cnt <- cnt[cnt > mean(cnt)]
 cnt <- rownames(as.data.frame(cnt))
 
-write.table(cnt, file = "centralityAnalysis/keyGenes.txt", quote = F, row.names = F, col.names = F)
+write.table(cnt, file = "Results/KeyGenes/centralityAnalysis/keyGenes.txt", quote = F, row.names = F, col.names = F)
 #####################################
