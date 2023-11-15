@@ -11,12 +11,12 @@ The files are organised into four folders:
 ## Reproducing the results
 This repository contains all the code necessary to reproduce the results in the paper. In particular:
  - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
-   - Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
-   - Run *batchCorrection.R* to correct batch effects in merged datasets.
-   - Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
+   1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
+   2. Run *batchCorrection.R* to correct batch effects in merged datasets.
+   3. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
  - **Codes/KeyGenes** includes the required code for identifying key genes.
-   - Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
+   4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
    - Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
    - Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
    - Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
