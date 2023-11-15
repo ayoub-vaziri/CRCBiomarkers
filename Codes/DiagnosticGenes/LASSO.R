@@ -7,7 +7,7 @@ library(dplyr)
 set.seed(123)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 #### Load and process train data ####
 #####################################

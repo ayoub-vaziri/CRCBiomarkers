@@ -8,7 +8,7 @@ library(e1071)
 library(dplyr)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 set.seed(123)
 

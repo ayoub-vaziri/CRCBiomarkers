@@ -8,7 +8,7 @@ library(dplyr)
 library(preprocessCore)
 
 # Set the current working directory to the project path
-setwd("PROJECT_PATH")
+setwd(project_path)
 
 #### Load and process external testing dataset ####
 ###################################################
