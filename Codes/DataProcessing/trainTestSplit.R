@@ -1,8 +1,9 @@
 library(data.table)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd(project_path)
 
-samples <- as.data.frame(fread("Res/batchCorrection/corrected_exprColorectal.csv"))
+samples <- as.data.frame(fread("Results/DataProcessing/batchCorrection/corrected_exprColorectal.csv"))
 rownames(samples) <- samples$sample
 samples <- samples[,-c(1,2,3)]
 
@@ -21,5 +22,5 @@ testingSamples <- union(testingCancerSamples, testingNormalSamples)
 trainingSet <- samples[which(rownames(samples) %in% trainingSamples),]
 testingSet <- samples[which(rownames(samples) %in% testingSamples),]
 
-write.csv(trainingSet, "Res/trainTestSplit/training_set.csv")
-write.csv(testingSet, "Res/trainTestSplit/testing_set.csv")
+write.csv(trainingSet, "Results/DataProcessing/trainTestSplit/training_set.csv")
+write.csv(testingSet, "Results/DataProcessing/trainTestSplit/testing_set.csv")
