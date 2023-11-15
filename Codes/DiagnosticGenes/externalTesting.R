@@ -11,7 +11,6 @@ setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
 
 #### Load and process external testing dataset ####
 ###################################################
-
 gse21815 <- getGEO("GSE21815", destdir = "Data/")
 gse106582 <- getGEO("GSE106582", destdir = "Data/")
 
