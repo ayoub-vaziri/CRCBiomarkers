@@ -22,7 +22,7 @@ pred <- function(model, x) {
 biomarkers <- c("CDC25B", "CDK4", "MMP1", "MMP7", "PLAU", "SLC7A5", "TEAD4", "TRIB3")
 
 exprData <- read.table("exprData")$V1
-model <- readRDS("RF.rds")
+model <- readRDS("TrainedRF.rds")
 
 x <- as.data.frame(matrix(biomarkers, nrow = 1, ncol = 8))
 colnames(x) <- x[1,]

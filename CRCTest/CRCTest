@@ -41,4 +41,4 @@ echo "Enter 'TRIB3' gene expression: "
 read TRIB3
 echo $TRIB3 >> ~/CRC/exprData
 
-Rscript ~/CRC/RF.R
+Rscript ~/CRC/Interface.R
