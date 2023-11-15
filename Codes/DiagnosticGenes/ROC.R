@@ -3,7 +3,8 @@ library(data.table)
 
 set.seed(123)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### ROC curve function ####
 ############################
@@ -35,13 +36,13 @@ rocCurve <- function(data, genes, path, mfrow, auc.x, auc.y, w, h) {
 ############################
 
 
-lassoGenes <- fread("Res/LASSO/lassoGenes.txt", header = FALSE)$V1
+lassoGenes <- fread("Results/DiagnosticGenes/LASSO/lassoGenes.txt", header = FALSE)$V1
 lassoGenes <- sort(lassoGenes)
 
 
 #### ROC curve for train data ####
 ##################################
-trainingSet <- as.data.frame(fread("Res/trainTestSplit/training_set.csv"))
+trainingSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 
 rownames(trainingSet) <- trainingSet$V1
 group <- trainingSet$group
@@ -56,7 +57,7 @@ train <- cbind(group=group, trainingSet)
 
 #### ROC curve for testing data ####
 ####################################
-testSet <- as.data.frame(fread("Res/trainTestSplit/testing_set.csv"))
+testSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/testing_set.csv"))
 
 rownames(testSet) <- testSet$V1
 
@@ -73,6 +74,6 @@ test <- cbind(group=group, testSet)
 #### ROC curve visualization ####
 #################################
 trainTestData <- list(train, test)
-rocCurve(trainTestData, lassoGenes, "Res/supplementary/ROC.png", c(2, 5), 0.78, 0.50, 3600, 1450)
-rocCurve(trainTestData, lassoGenes[-c(3,10)], "Res/ROC/ROC.png", c(2, 4), 0.78, 0.50, 3000, 1500)
+#rocCurve(trainTestData, lassoGenes, "Res/supplementary/ROC.png", c(2, 5), 0.78, 0.50, 3600, 1450)
+rocCurve(trainTestData, lassoGenes[-c(3,10)], "Results/DiagnosticGenes/ROC/ROC.png", c(2, 4), 0.78, 0.50, 3000, 1500)
 #################################
