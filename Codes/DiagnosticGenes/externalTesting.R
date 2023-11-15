@@ -7,7 +7,8 @@ library(GEOquery)
 library(dplyr)
 library(preprocessCore)
 
-setwd("D:/Sharif University/Master/Lessons/5. Fifth Term/Thesis/")
+# Set the current working directory to the project path
+setwd("PROJECT_PATH")
 
 #### Load and process external testing dataset ####
 ###################################################
@@ -100,8 +101,8 @@ expr106582 <- expr106582[,-1]
 #### ML models evaluation ####
 ##############################
 # Load trained RF and SVM models
-RF <- readRDS("Res/trainEvaluateML/RF.rds")
-SVM <- readRDS("Res/trainEvaluateML/SVM.rds")
+RF <- readRDS("Results/DiagnosticGenes/trainEvaluateML/RF.rds")
+SVM <- readRDS("Results/DiagnosticGenes/trainEvaluateML/SVM.rds")
 
 # log2 transform
 log2trans <- function(expr) {
@@ -126,7 +127,7 @@ rf.metrics <- function(x, y, accession, model) {
   y.prob <- as.data.frame(pred(x, model)[[2]])
   roc <- roc(y.true ~ as.numeric(y.prob$Tumor))
   cm <- confusionMatrix(y.true, y.pred, positive = "Tumor")$table
-  write.csv(cm, paste0("Res/externalTesting/", accession, ".ConfusionMatrix.csv"))
+  write.csv(cm, paste0("Results/DiagnosticGenes/externalTesting/", accession, ".ConfusionMatrix.csv"))
   mats <- data.frame("AUC"=roc$auc[1],
                      "accuracy"=Accuracy(y.pred, y.true),
                      "sensitivity"=Sensitivity(y.true, y.pred, positive = "Tumor"),
@@ -136,7 +137,7 @@ rf.metrics <- function(x, y, accession, model) {
                      "f1score"=F1_Score(y.true, y.pred, positive = "Tumor")
                      )
 
-  write.csv(mats, paste0("Res/externalTesting/", accession, ".Metrics.csv"))
+  write.csv(mats, paste0("Results/DiagnosticGenes/externalTesting/", accession, ".Metrics.csv"))
   return(mats)
 }
 
@@ -149,7 +150,7 @@ svm.metrics <- function(x, y, accession, model) {
   roc <- roc(y.true ~ as.numeric(y.prob$Tumor))
   
   cm <- table(y.true, y.pred)
-  write.csv(cm, paste0("Res/externalTesting/", accession, ".ConfusionMatrix.csv"))
+  write.csv(cm, paste0("Results/DiagnosticGenes/externalTesting/", accession, ".ConfusionMatrix.csv"))
   
   mats <- data.frame(
                     "AUC"=roc$auc[1],
@@ -160,7 +161,7 @@ svm.metrics <- function(x, y, accession, model) {
                     "recall"=Recall(y.true, y.pred, positive = "Tumor"),
                     "f1score"=F1_Score(y.true, y.pred, positive = "Tumor")
                     )
-  write.csv(mats, paste0("Res/externalTesting/", accession, ".Metrics.csv"))
+  write.csv(mats, paste0("Results/DiagnosticGenes/externalTesting/", accession, ".Metrics.csv"))
   return(mats)
 }
 ##############################
