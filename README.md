@@ -12,6 +12,12 @@ The files are organised into four folders:
 This repository contains all the code necessary to reproduce the results in the paper. 
 
 First, download the repository and place it in your project directory.
+
+```bash
+git clone https://github.com/username/repository-name.git path/to/directory
+```
+
+In this command, "path/to/directory" refers to your project path.
 	
 Then, run the following commands in order.
 
