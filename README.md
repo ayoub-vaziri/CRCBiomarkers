@@ -16,7 +16,7 @@ This repository contains all the code necessary to reproduce the results in the 
 		# Set the current working directory to the project path
 		setwd(project_path)
 		```
-	2. Then, run the following commands in order.
+	1. Then, run the following commands in order.
 
  - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
 1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
