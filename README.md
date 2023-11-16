@@ -22,21 +22,21 @@ Then, run the following commands in order.
  - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
 1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
 2. Run *batchCorrection.R* to correct batch effects in merged datasets.
-   - Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
+3. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
  - **Codes/KeyGenes** includes the required code for identifying key genes.
-   - Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
-   - Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
-   - Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
-   - Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
-   - Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
+4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
+5. Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
+6. Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
+7. Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
+8. Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
    
  - **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
-   - Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
-   - Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
-   - Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
-   - Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
-   - Run *externalTesting.R* to further verify the accuracy of diagnostic genes using two external datasets (GSE21815 and GSE106582).
+9. Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
+10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
+11. Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
+12. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
+13. Run *externalTesting.R* to further verify the accuracy of diagnostic genes using two external datasets (GSE21815 and GSE106582).
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
