@@ -10,27 +10,27 @@ The files are organised into four folders:
 
 ## Reproducing the results
 This repository contains all the code necessary to reproduce the results in the paper. 
-	- First, download the repository and place it in your project directory.
+- First, download the repository and place it in your project directory.
 		- For running the codes, set the project path using the `setwd()` command at the beginning of each code.
 		```R
 		# Set the current working directory to the project path
 		setwd(project_path)
 		```
-	- Then, run the following commands in order.
+- Then, run the following commands in order.
 
- - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
+- **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
 1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
 2. Run *batchCorrection.R* to correct batch effects in merged datasets.
 3. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
- - **Codes/KeyGenes** includes the required code for identifying key genes.
+- **Codes/KeyGenes** includes the required code for identifying key genes.
 4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
 5. Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
 6. Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
 7. Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
 8. Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
    
- - **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
+- **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
 9. Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
 10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
 11. Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
