@@ -14,17 +14,15 @@ This repository contains all the code necessary to reproduce the results in the 
 First, download the repository and place it in your project directory.
 
 ```bash
-git clone https://github.com/username/repository-name.git path/to/directory
+git clone https://github.com/ayoub-vaziri/CRCBiomarkers.git path/to/directory
 ```
-
 In this command, "path/to/directory" refers to your project path.
 	
 Then, run the following commands in order.
 
-For running the codes, set the project path using the `setwd()` command at the beginning of each code.
+Before running the code, make sure to set the project path using the setwd() command at the beginning of each code. 
 	
 ```R
-# Set the current working directory to the project path
 setwd(project_path)
 ```
 
