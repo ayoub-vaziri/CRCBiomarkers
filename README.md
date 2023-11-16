@@ -9,20 +9,18 @@ The files are organised into four folders:
  - *CRCTest*: contains a trained random forest model and code for diagnosing tumor samples from normal samples.
 
 ## Reproducing the results
-This repository contains all the code necessary to reproduce the results in the paper.
-
-First, download the repository and place it in your project directory.
-  - For running the codes, set the project path using the `setwd()` command at the beginning of each code.
-     ```R
-     # Set the current working directory to the project path
-     setwd(project_path)
+This repository contains all the code necessary to reproduce the results in the paper. First, download the repository and place it in your project directory.
+For running the codes, set the project path using the `setwd()` command at the beginning of each code.
+```R
+# Set the current working directory to the project path
+setwd(project_path)
      ```
 Then, run the following commands in order.
 
  - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
-1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
-2. Run *batchCorrection.R* to correct batch effects in merged datasets.
-3. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
+	1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
+	2. Run *batchCorrection.R* to correct batch effects in merged datasets.
+	3. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
    
  - **Codes/KeyGenes** includes the required code for identifying key genes.
 4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
