@@ -43,7 +43,7 @@ setwd(project_path)
 10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
 11. Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
 12. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
-13. Run *testModel.R* to further verify the accuracy of diagnostic genes using two test datasets (GSE21815 and GSE106582).
+13. Run *testModel.R* to further verify the accuracy of diagnostic genes using test datasets (GSE21815 and GSE106582).
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
