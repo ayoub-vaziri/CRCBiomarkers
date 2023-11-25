@@ -29,7 +29,7 @@ setwd(project_path)
 - **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
 1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
 2. Run *batchCorrection.R* to correct batch effects in merged datasets.
-3. Run *trainTestSplit.R* to split merged datasets into training and testing datasets.
+3. Run *trainTestSplit.R* to split merged datasets into training and validation datasets.
    
 - **Codes/KeyGenes** includes the required code for identifying key genes.
 4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
@@ -43,7 +43,7 @@ setwd(project_path)
 10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
 11. Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
 12. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
-13. Run *testModel.R* to further verify the accuracy of diagnostic genes using test datasets (GSE21815 and GSE106582).
+13. Run *testML.R* to further verify the accuracy of diagnostic genes using test datasets (GSE21815 and GSE106582).
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
