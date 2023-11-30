@@ -40,7 +40,7 @@ setwd(project_path)
    
 - **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
 9. Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
-10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and testing datasets.
+10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and validation datasets.
 11. Run *boxplot.R* to validate the expression of diagnostic genes on the tesing dataset.
 12. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
 13. Run *testML.R* to further verify the accuracy of diagnostic genes using test datasets (GSE21815 and GSE106582).
