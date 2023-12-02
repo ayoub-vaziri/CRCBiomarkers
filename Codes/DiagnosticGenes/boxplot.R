@@ -7,20 +7,20 @@ setwd("PROJECT_PATH")
 
 #### Boxplot for test data ####
 #####################################
-testingSet <- as.data.frame(fread("Results/DiagnosticGenes/trainTestSplit/testing_set.csv"))
+validation <- as.data.frame(fread("Results/DiagnosticGenes/trainTestSplit/validation_set.csv"))
 
-rownames(testingSet) <- testingSet$V1
-group <- testingSet$group
+rownames(validation) <- validation$V1
+group <- validation$group
 group <- as.factor(group)
 levels(group) <- c("Normal", "Tumor")
-testingSet <- testingSet[,-c(1,2)]
+validation <- validation[,-c(1,2)]
 
 lassoGenes <- fread("Results/DiagnosticGenes/LASSO/lassoGenes.txt", header = FALSE)$V1
 lassoGenes <- sort(lassoGenes)
 lassoGenes <- lassoGenes[-c(3,10)]
 
-testingSet <- testingSet[, lassoGenes]
-test <- cbind(group=group, testingSet)
+validation <- validation[, lassoGenes]
+test <- cbind(group=group, validation)
 
 # png boxplots
 cols <- setdiff(colnames(test), "group")
