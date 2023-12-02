@@ -5,9 +5,9 @@ library(data.table)
 # Set the current working directory to the project path
 setwd("PROJECT_PATH")
 
-#### Boxplot for test data ####
+#### Boxplot for valid data ####
 #####################################
-validation <- as.data.frame(fread("Results/DiagnosticGenes/trainTestSplit/validation_set.csv"))
+validation <- as.data.frame(fread("Results/DiagnosticGenes/trainvalidSplit/validation_set.csv"))
 
 rownames(validation) <- validation$V1
 group <- validation$group
@@ -20,14 +20,14 @@ lassoGenes <- sort(lassoGenes)
 lassoGenes <- lassoGenes[-c(3,10)]
 
 validation <- validation[, lassoGenes]
-test <- cbind(group=group, validation)
+valid <- cbind(group=group, validation)
 
 # png boxplots
-cols <- setdiff(colnames(test), "group")
+cols <- setdiff(colnames(valid), "group")
 y_labels <- cols
 
 Map(function(x, y, z) {
-  ggboxplot(data = test, x = "group", y = x,
+  ggboxplot(data = valid, x = "group", y = x,
             color = "group",
             palette = c("blue", "red"),
             ylab = paste(y, "expression"),
@@ -41,7 +41,7 @@ Map(function(x, y, z) {
           legend.text = element_text(size=15)) 
 }, cols, y_labels, LETTERS[1:8]) -> list_plots
 
-png(filename = "Results/DiagnosticGenes/boxplot/boxplot_test.png", width = 4500, height = 3000, res = 300)
+png(filename = "Results/DiagnosticGenes/boxplot/boxplot_valid.png", width = 4500, height = 3000, res = 300)
 ggarrange(plotlist = list_plots, common.legend = TRUE, ncol = 4, nrow = 2) 
 dev.off()
 #####################################
