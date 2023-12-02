@@ -36,7 +36,7 @@ feat74602 <- fData(gse74602)
 feat142279 <- fData(gse142279)
 
 # GSE10950 preprocessing
-expr10950 <- as.data.frame(fread("Data/GSE10950_Primary_Tumor_nonorm_nobkgd_GEOarchive_Matrix.txt"))
+expr10950 <- as.data.frame(fread("Data/GSE10950_Primary_Tumor_nonorm_nobkgd_GEOarchive_Matrix.txt.gz"))
 colnames(expr10950) <- expr10950[2,]
 expr10950 <- expr10950[-c(1,2),]
 rownames(expr10950) <- expr10950$ID_REF
