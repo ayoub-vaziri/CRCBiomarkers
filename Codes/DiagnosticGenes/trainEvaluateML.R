@@ -14,36 +14,36 @@ set.seed(123)
 
 #### Load and process train data ####
 #####################################
-trainSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
-testSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/testing_set.csv"))
+trainSet <- as.data.frame(fread("Results/DataProcessing/trainvalidSplit/training_set.csv"))
+validSet <- as.data.frame(fread("Results/DataProcessing/trainvalidSplit/validation_set.csv"))
 
 trainGroup <- trainSet$group
-testGroup <- testSet$group
+validGroup <- validSet$group
 
 rownames(trainSet) <- trainSet$V1
-rownames(testSet) <- testSet$V1
+rownames(validSet) <- validSet$V1
 
 trainData <- trainSet[,-c(1,2)]
-testData <- testSet[,-c(1,2)]
+validData <- validSet[,-c(1,2)]
 
 lassoGenes <- fread("Results/DiagnosticGenes/LASSO/lassoGenes.txt", header = FALSE)$V1
 lassoGenes <- sort(lassoGenes)
 biomarkers <- lassoGenes[-c(3,10)]
 
 trainData <- trainData[,which(colnames(trainData) %in% biomarkers)]
-testData <- testData[,which(colnames(testData) %in% biomarkers)]
+validData <- validData[,which(colnames(validData) %in% biomarkers)]
 
 trainData <- trainData[,biomarkers]
-testData <- testData[,biomarkers]
+validData <- validData[,biomarkers]
 
 trainGroup <- as.factor(trainGroup)
-testGroup <- as.factor(testGroup)
+validGroup <- as.factor(validGroup)
 
 levels(trainGroup) <- c("Normal", "Tumor")
-levels(testGroup) <- c("Normal", "Tumor")
+levels(validGroup) <- c("Normal", "Tumor")
 
 train <- cbind(group=trainGroup, trainData)
-test <- cbind(group=testGroup, testData)
+valid <- cbind(group=validGroup, validData)
 #####################################
 
 #### ROC curve ####
@@ -122,29 +122,29 @@ rf.train.matrics <- data.frame("AUC"=rf.train.roc$auc[1],
 write.csv(rf.train.matrics, "Results/DiagnosticGenes/trainEvaluateML/rf.train.matrics.csv")
 
 
-# Macke prediction on test data
-rf.test.group.true <- test$group
-rf.test.group.pred <- as.factor(predict(best.rf, test[,-1]))
-rf.test.group.prob <- as.data.frame(predict(best.rf, test[,-1], type = "prob"))
+# Macke prediction on valid data
+rf.valid.group.true <- valid$group
+rf.valid.group.pred <- as.factor(predict(best.rf, valid[,-1]))
+rf.valid.group.prob <- as.data.frame(predict(best.rf, valid[,-1], type = "prob"))
 
-rf.test.roc <- roc(rf.test.group.true ~ as.numeric(rf.test.group.prob$Tumor))
+rf.valid.roc <- roc(rf.valid.group.true ~ as.numeric(rf.valid.group.prob$Tumor))
 
-rf.test.cm <- confusionMatrix(rf.test.group.true, rf.test.group.pred, positive = "Tumor")
-write.csv(rf.test.cm$table, "Results/DiagnosticGenes/trainEvaluateML/rf.test.confusion.matrix.csv")
+rf.valid.cm <- confusionMatrix(rf.valid.group.true, rf.valid.group.pred, positive = "Tumor")
+write.csv(rf.valid.cm$table, "Results/DiagnosticGenes/trainEvaluateML/rf.valid.confusion.matrix.csv")
 
-rf.test.group.true <- as.numeric(rf.test.group.true)
-rf.test.group.pred <- as.numeric(rf.test.group.pred)
+rf.valid.group.true <- as.numeric(rf.valid.group.true)
+rf.valid.group.pred <- as.numeric(rf.valid.group.pred)
 
-rf.test.matrics <- data.frame("AUC"=rf.test.roc$auc[1],
-                              "accuracy"=Accuracy(rf.test.group.pred, rf.test.group.true),
-                              "sensitivity"=Sensitivity(rf.test.group.true, rf.test.group.pred, positive = 2),
-                              "specificity"=Specificity(rf.test.group.true, rf.test.group.pred, positive = 2),
-                              "precision"=Precision(rf.test.group.true, rf.test.group.pred, positive = 2),
-                              "recall"=Recall(rf.test.group.true, rf.test.group.pred, positive = 2),
-                              "f1score"=F1_Score(rf.test.group.true, rf.test.group.pred, positive = 2)
+rf.valid.matrics <- data.frame("AUC"=rf.valid.roc$auc[1],
+                              "accuracy"=Accuracy(rf.valid.group.pred, rf.valid.group.true),
+                              "sensitivity"=Sensitivity(rf.valid.group.true, rf.valid.group.pred, positive = 2),
+                              "specificity"=Specificity(rf.valid.group.true, rf.valid.group.pred, positive = 2),
+                              "precision"=Precision(rf.valid.group.true, rf.valid.group.pred, positive = 2),
+                              "recall"=Recall(rf.valid.group.true, rf.valid.group.pred, positive = 2),
+                              "f1score"=F1_Score(rf.valid.group.true, rf.valid.group.pred, positive = 2)
 )
 
-write.csv(rf.test.matrics, "Results/DiagnosticGenes/trainEvaluateML/rf.test.matrics.csv")
+write.csv(rf.valid.matrics, "Results/DiagnosticGenes/trainEvaluateML/rf.valid.matrics.csv")
 #######################
 
 
@@ -191,26 +191,26 @@ svm.train.matrics <- data.frame("AUC"=svm.train.roc$auc[1],
 write.csv(svm.train.matrics, "Results/DiagnosticGenes/trainEvaluateML/svm.train.matrics.csv")
 
 
-# Macke prediction on test data
-svm.test.group.true <- test$group
-svm.test.group.pred <- unname(predict(tune.svm$best.model, newdata = test[,-1]))
-svm.test.group.prob <- as.data.frame(attr(predict(svm.fit, newdata = test[,-1], probability = TRUE), "probabilities"))
+# Macke prediction on valid data
+svm.valid.group.true <- valid$group
+svm.valid.group.pred <- unname(predict(tune.svm$best.model, newdata = valid[,-1]))
+svm.valid.group.prob <- as.data.frame(attr(predict(svm.fit, newdata = valid[,-1], probability = TRUE), "probabilities"))
 
-svm.test.roc <- roc(svm.test.group.true ~ as.numeric(svm.test.group.prob$Tumor))
+svm.valid.roc <- roc(svm.valid.group.true ~ as.numeric(svm.valid.group.prob$Tumor))
 
-svm.test.cm <- table(svm.test.group.true, svm.test.group.pred)
-write.csv(svm.test.cm, "Results/DiagnosticGenes/trainEvaluateML/svm.test.confusion.matrix.csv")
+svm.valid.cm <- table(svm.valid.group.true, svm.valid.group.pred)
+write.csv(svm.valid.cm, "Results/DiagnosticGenes/trainEvaluateML/svm.valid.confusion.matrix.csv")
 
-svm.test.matrics <- data.frame("AUC"=svm.test.roc$auc[1],
-                               "accuracy"=Accuracy(svm.test.group.pred, svm.test.group.true),
-                               "sensitivity"=Sensitivity(svm.test.group.true, svm.test.group.pred, positive = "Tumor"),
-                               "specificity"=Specificity(svm.test.group.true, svm.test.group.pred, positive = "Tumor"),
-                               "precision"=Precision(svm.test.group.true, svm.test.group.pred, positive = "Tumor"),
-                               "recall"=Recall(svm.test.group.true, svm.test.group.pred, positive = "Tumor"),
-                               "f1score"=F1_Score(svm.test.group.true, svm.test.group.pred, positive = "Tumor")
+svm.valid.matrics <- data.frame("AUC"=svm.valid.roc$auc[1],
+                               "accuracy"=Accuracy(svm.valid.group.pred, svm.valid.group.true),
+                               "sensitivity"=Sensitivity(svm.valid.group.true, svm.valid.group.pred, positive = "Tumor"),
+                               "specificity"=Specificity(svm.valid.group.true, svm.valid.group.pred, positive = "Tumor"),
+                               "precision"=Precision(svm.valid.group.true, svm.valid.group.pred, positive = "Tumor"),
+                               "recall"=Recall(svm.valid.group.true, svm.valid.group.pred, positive = "Tumor"),
+                               "f1score"=F1_Score(svm.valid.group.true, svm.valid.group.pred, positive = "Tumor")
 )
 
-write.csv(svm.test.matrics, "Results/DiagnosticGenes/trainEvaluateML/svm.test.matrics.csv")
+write.csv(svm.valid.matrics, "Results/DiagnosticGenes/trainEvaluateML/svm.valid.matrics.csv")
 ################################
 
 
