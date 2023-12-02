@@ -13,7 +13,7 @@ rocCurve <- function(data, genes, path, mfrow, auc.x, auc.y, w, h) {
   par(mfrow=mfrow)
   for(g in genes) {
     roc.train <- roc(as.formula(paste("group ~", g)), data = data[[1]], auc = TRUE, ci = TRUE)
-    roc.test <- roc(as.formula(paste("group ~", g)), data = data[[2]], auc = TRUE, ci = TRUE)
+    roc.valid <- roc(as.formula(paste("group ~", g)), data = data[[2]], auc = TRUE, ci = TRUE)
     plot.roc(roc.train,
              col = "#1F77B4",
              legacy.axes = TRUE,
@@ -22,10 +22,10 @@ rocCurve <- function(data, genes, path, mfrow, auc.x, auc.y, w, h) {
              lwd = 2,
              cex.lab = 1.1
     )
-    lines(roc.test, col="salmon")
+    lines(roc.valid, col="salmon")
     legend("bottomright",
            legend=c(paste("train AUC:", signif(roc.train$auc*100, digits = 4), "%"),
-                    paste("test AUC: ", signif(roc.test$auc*100, digits = 4), "%")),
+                    paste("valid AUC: ", signif(roc.valid$auc*100, digits = 4), "%")),
            col=c("#1F77B4", "salmon"),
            lty = 1,
            lwd = 2
@@ -42,7 +42,7 @@ lassoGenes <- sort(lassoGenes)
 
 #### ROC curve for train data ####
 ##################################
-trainingSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
+trainingSet <- as.data.frame(fread("Results/DataProcessing/trainvalidSplit/training_set.csv"))
 
 rownames(trainingSet) <- trainingSet$V1
 group <- trainingSet$group
@@ -55,25 +55,25 @@ train <- cbind(group=group, trainingSet)
 ##################################
 
 
-#### ROC curve for testing data ####
+#### ROC curve for validing data ####
 ####################################
-testSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/testing_set.csv"))
+validSet <- as.data.frame(fread("Results/DataProcessing/trainvalidSplit/validation_set.csv"))
 
-rownames(testSet) <- testSet$V1
+rownames(validSet) <- validSet$V1
 
-group <- testSet$group
+group <- validSet$group
 group <- as.factor(group)
 levels(group) <- c("Normal", "Tumor")
-testSet <- testSet[,-c(1,2)]
+validSet <- validSet[,-c(1,2)]
 
-testSet <- testSet[, lassoGenes]
-test <- cbind(group=group, testSet)
+validSet <- validSet[, lassoGenes]
+valid <- cbind(group=group, validSet)
 ####################################
 
 
 #### ROC curve visualization ####
 #################################
-trainTestData <- list(train, test)
-#rocCurve(trainTestData, lassoGenes, "Res/supplementary/ROC.png", c(2, 5), 0.78, 0.50, 3600, 1450)
-rocCurve(trainTestData, lassoGenes[-c(3,10)], "Results/DiagnosticGenes/ROC/ROC.png", c(2, 4), 0.78, 0.50, 3000, 1500)
+trainValidData <- list(train, valid)
+#rocCurve(trainValidData, lassoGenes, "Res/supplementary/ROC.png", c(2, 5), 0.78, 0.50, 3600, 1450)
+rocCurve(trainValidData, lassoGenes[-c(3,10)], "Results/DiagnosticGenes/ROC/ROC.png", c(2, 4), 0.78, 0.50, 3000, 1500)
 #################################
