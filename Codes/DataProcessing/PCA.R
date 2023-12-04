@@ -7,25 +7,25 @@ setwd(project_path)
 #### PCA plot for validation set ####
 #####################################
 train_data <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
-test_data <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/testing_set.csv"))
+valid_data <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/validation_set.csv"))
 
 colnames(train_data)[1] <- "sample"
-colnames(test_data)[1] <- "sample"
+colnames(valid_data)[1] <- "sample"
 
 train_group <- train_data$group
-test_group <- test_data$group
+valid_group <- valid_data$group
 
 train_group <- as.factor(train_group)
 levels(train_group) <- c("Normal", "Tumor")
 
-test_group <- as.factor(test_group)
-levels(test_group) <- c("Normal", "Tumor")
+valid_group <- as.factor(valid_group)
+levels(valid_group) <- c("Normal", "Tumor")
 
 rownames(train_data) <- train_data$sample
-rownames(test_data) <- test_data$sample
+rownames(valid_data) <- valid_data$sample
 
 train_data <- train_data[,-c(1,2)]
-test_data <- test_data[,-c(1,2)]
+valid_data <- valid_data[,-c(1,2)]
 
 type <- c("Normal", "Tumor")
 
@@ -65,8 +65,8 @@ train_clrs <- c(
 )
 
 test_clrs <- c(
-  rep("cyan3",length(which(test_group == "Normal"))),
-  rep("coral2",length(which(test_group == "Tumor")))
+  rep("cyan3",length(which(valid_group == "Normal"))),
+  rep("coral2",length(which(valid_group == "Tumor")))
 )
 
 train_pca <- prcomp(train_data, scale = F, center = T)
@@ -81,13 +81,13 @@ fig(sdat, as.numeric(train_group), train_clrs)
 dev.off()
 
 
-test_pca <- prcomp(test_data, scale = F, center = T)
+test_pca <- prcomp(valid_data, scale = F, center = T)
 
 pc1 <- test_pca$x[,1]
 pc2 <- test_pca$x[,2]
 
-sdat <- data.frame(x=pc1, y=pc2, group=type[as.numeric(test_group)])
+sdat <- data.frame(x=pc1, y=pc2, group=type[as.numeric(valid_group)])
 
-png("Results/DataProcessing/PCA/test.pcaplot.png", width = 2600, height = 2000, res = 300)
-fig(sdat, as.numeric(test_group), train_clrs)
+png("Results/DataProcessing/PCA/valid.pcaplot.png", width = 2600, height = 2000, res = 300)
+fig(sdat, as.numeric(valid_group), train_clrs)
 dev.off()
