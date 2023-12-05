@@ -3,7 +3,7 @@
 ## Overview
 This github repository contains the data files and analysis code used for the scientific paper titled **"Precision Diagnostics in Colorectal Cancer: Unraveling New Gene Biomarkers through Bioinformatics and Machine Learning"**.
 The files are organised into four folders:
- - *Data*: which contains all the transcriptomic data required to perform the analyses described in the paper
+ - *Data*: which contains all the transcriptomic data required to perform the analyses described in the paper.
  - *Codes*: contains the R code to reproduce all  analyses.
  - *Results*: contains all the results produced by the R scripts.
  - *CRCTest*: contains a trained random forest model and code for diagnosing tumor samples from normal samples.
