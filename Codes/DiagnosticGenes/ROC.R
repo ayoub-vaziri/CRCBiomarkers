@@ -42,7 +42,7 @@ lassoGenes <- sort(lassoGenes)
 
 #### ROC curve for train data ####
 ##################################
-trainingSet <- as.data.frame(fread("Results/DataProcessing/trainvalidSplit/training_set.csv"))
+trainingSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/training_set.csv"))
 
 rownames(trainingSet) <- trainingSet$V1
 group <- trainingSet$group
@@ -57,7 +57,7 @@ train <- cbind(group=group, trainingSet)
 
 #### ROC curve for validing data ####
 ####################################
-validSet <- as.data.frame(fread("Results/DataProcessing/trainvalidSplit/validation_set.csv"))
+validSet <- as.data.frame(fread("Results/DataProcessing/trainTestSplit/validation_set.csv"))
 
 rownames(validSet) <- validSet$V1
 
