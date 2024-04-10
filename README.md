@@ -6,7 +6,6 @@ The files are organised into four folders:
  - *Data*: which contains all the transcriptomic data required to perform the analyses described in the paper.
  - *Codes*: contains the R code to reproduce all  analyses.
  - *Results*: contains all the results produced by the R scripts.
- - *CRCTest*: contains a trained random forest model and code for diagnosing tumor samples from normal samples.
 
 ## Reproducing the results
 This repository contains all the code necessary to reproduce the results in the paper. 
