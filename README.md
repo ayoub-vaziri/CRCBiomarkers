@@ -26,24 +26,17 @@ Before running the code, make sure to set the project path using the setwd() com
 setwd(project_path)
 ```
 
-- **Codes/DataProcessing** contains the necessary code for preprocessing the initial dataset.
 1. Run *mergeDatasets.R* to merge the five microarray datasets (GSE10950, GSE25070, GSE41328, GSE74602, and GSE142279) based on their common genes.
-2. Run *batchCorrection.R* to correct batch effects in merged datasets.
-3. Run *trainTestSplit.R* to split merged datasets into training and validation datasets.
-   
-- **Codes/KeyGenes** includes the required code for identifying key genes.
+2. Run *trainValidSplit.R* to split merged datasets into training and validation datasets.
+3. Run *batchCorrection.R* to correct batch effects for training and validation datasets.
 4. Run *differentialExpressionAnalysis.R* to identify differentially expressed genes (DEGs) on the training dataset.
 5. Run *enrichmentAnalysis.R* to gain a deeper insight into the biological significance of the DEGs.
 6. Run *geneCoexpressionAnalysis.R* to construct co-expression modules on the training dataset using the automatic network construction package CEMiTool with default settings.
 7. Run *overlappedGenes.R* to identify genes overlapped between DEGs and genes within the most significant module identified by CEMiTool.
 8. Run *centralityAnalysis.R* to identify key genes in the protein-protein interaction (PPI) network.
-   
-- **Codes/DiagnosticGenes** contains the necessary code for identifying and validating diagnostic genes in CRC.
 9. Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
 10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and validation datasets.
-11. Run *boxplot.R* to validate the expression of diagnostic genes on the validation dataset.
-12. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
-13. Run *testML.R* to further verify the accuracy of diagnostic genes using test datasets (GSE21815 and GSE106582).
+11. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
@@ -81,3 +74,7 @@ The scripts use core R functionality and several publicly available R packages l
  - **AnnotationDbi** (1.62.2)
  - **ggvenn** (0.1.10)
  - **ggrepel** (0.9.3)
+ - **neuralnet** (1.44.2)
+ - **nnet** (7.3.19)
+ - **NeuralNetTools** (1.5.3)
+ - **h2o** (3.44.0.3)
