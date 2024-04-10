@@ -9,8 +9,8 @@ setwd(project_path)
 
 #### Load data ####
 ###################
-training_set <- as.data.frame(fread("Res/trainValidSplit/training_set.csv"))
-validation_set <- as.data.frame(fread("Res/trainValidSplit/validation_set.csv"))
+training_set <- as.data.frame(fread("Results/trainValidSplit/training_set.csv"))
+validation_set <- as.data.frame(fread("Results/trainValidSplit/validation_set.csv"))
 
 rownames(training_set) <- training_set$V1
 rownames(validation_set) <- validation_set$V1
@@ -101,7 +101,7 @@ tdat <- data.frame(sdat[,1:2], grps[train_batch], type[train_group])
 colnames(tdat)<-c("PC-1","PC-2","Batch","Group")
 rownames(tdat)<-rownames(training_data)
 
-write.table(tdat,paste0("Res/batchCorrection/pca_Before_Correction_for_training_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.table(tdat,paste0("Results/batchCorrection/pca_Before_Correction_for_training_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 
 clrs <- c(
   rep("#1B9E77",length(which(train_batch == 1))),
@@ -112,7 +112,7 @@ clrs <- c(
   # rep("#D95F02",length(which(batchColorectal == 6)))
 )
 
-png("Res/batchCorrection/pca_Before_Correction_for_training_set.png", width = 2600, height = 2000, res = 300)
+png("Results/batchCorrection/pca_Before_Correction_for_training_set.png", width = 2600, height = 2000, res = 300)
 fig(sdat, train_group, clrs, pca.var.per.before)
 dev.off()
 ################################################
@@ -132,7 +132,7 @@ tdat <- data.frame(sdat[,1:2], grps[valid_batch], type[valid_group])
 colnames(tdat)<-c("PC-1","PC-2","Batch","Group")
 rownames(tdat)<-rownames(validation_data)
 
-write.table(tdat,paste0("Res/batchCorrection/pca_Before_Correction_for_validation_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.table(tdat,paste0("Results/batchCorrection/pca_Before_Correction_for_validation_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 
 clrs <- c(
   rep("#1B9E77",length(which(valid_batch == 1))),
@@ -143,7 +143,7 @@ clrs <- c(
   # rep("#D95F02",length(which(batchColorectal == 6)))
 )
 
-png("Res/batchCorrection/pca_Before_Correction_for_validation_set.png", width = 2600, height = 2000, res = 300)
+png("Results/batchCorrection/pca_Before_Correction_for_validation_set.png", width = 2600, height = 2000, res = 300)
 fig(sdat, valid_group, clrs, pca.var.per.before)
 dev.off()
 ################################################
@@ -161,8 +161,8 @@ train_combatres <- ComBat(
 combatres_ <- as.data.frame(cbind(sample=rownames(t(train_combatres)), t(train_combatres)))
 combatres_ <- merge(train_batch_group, combatres_, by="sample")
 
-write.csv(combatres_, "Res/batchCorrection/corrected_training_set.csv")
-write.table(combatres_, paste0("Res/batchCorrection/corrected_training_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.csv(combatres_, "Results/batchCorrection/corrected_training_set.csv")
+write.table(combatres_, paste0("Results/batchCorrection/corrected_training_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 ##################################################
 
 #### Correct batch by ComBat for training set ####
@@ -178,8 +178,8 @@ valid_combatres <- ComBat(
 combatres_ <- as.data.frame(cbind(sample=rownames(t(valid_combatres)), t(valid_combatres)))
 combatres_ <- merge(valid_batch_group, combatres_, by="sample")
 
-write.csv(combatres_, "Res/batchCorrection/corrected_validation_set.csv")
-write.table(combatres_, paste0("Res/batchCorrection/corrected_validation_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.csv(combatres_, "Results/batchCorrection/corrected_validation_set.csv")
+write.table(combatres_, paste0("Results/batchCorrection/corrected_validation_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 ##################################################
 
 #### PCA on combat batch corrected for training set ####
@@ -197,7 +197,7 @@ tdat <- data.frame(sdat[,1:2], grps[train_batch], type[train_group])
 colnames(tdat)<-c("PC-1","PC-2","Batch","Group")
 rownames(tdat)<-rownames(training_data)
 
-write.table(tdat,paste0("Res/batchCorrection/pca_After_Correction_for_training_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.table(tdat,paste0("Results/batchCorrection/pca_After_Correction_for_training_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 
 clrs <- c(
   rep("#1B9E77",length(which(train_batch == 1))),
@@ -208,7 +208,7 @@ clrs <- c(
   # rep("#D95F02",length(which(batchColorectal == 6)))
 )
 
-png("Res/batchCorrection/pca_After_Correction_training_set.png", width = 2600, height = 2000, res = 300)
+png("Results/batchCorrection/pca_After_Correction_training_set.png", width = 2600, height = 2000, res = 300)
 fig(sdat, train_group, clrs, pca.var.per.after)
 dev.off()
 ########################################################
@@ -229,7 +229,7 @@ tdat <- data.frame(sdat[,1:2], grps[valid_batch], type[valid_group])
 colnames(tdat)<-c("PC-1","PC-2","Batch","Group")
 rownames(tdat)<-rownames(validation_data)
 
-write.table(tdat,paste0("Res/batchCorrection/pca_After_Correction_for_validation_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
+write.table(tdat,paste0("Results/batchCorrection/pca_After_Correction_for_validation_set.txt"),quote=TRUE,sep="\t",row.names=TRUE)
 
 clrs <- c(
   rep("#1B9E77",length(which(valid_batch == 1))),
@@ -240,7 +240,7 @@ clrs <- c(
   # rep("#D95F02",length(which(batchColorectal == 6)))
 )
 
-png("Res/batchCorrection/pca_After_Correction_validation_set.png", width = 2600, height = 2000, res = 300)
+png("Results/batchCorrection/pca_After_Correction_validation_set.png", width = 2600, height = 2000, res = 300)
 fig(sdat, valid_group, clrs, pca.var.per.after)
 dev.off()
 ##########################################################

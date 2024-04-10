@@ -2,7 +2,7 @@ library(data.table)
 
 setwd(project_path)
 
-samples <- as.data.frame(fread("Res/mergeDatasets/exprColorectal.csv"))
+samples <- as.data.frame(fread("Results/mergeDatasets/exprColorectal.csv"))
 rownames(samples) <- samples$V1
 samples <- samples[,-1]
 
@@ -21,5 +21,5 @@ validationSamples <- union(validationCancerSamples, validationNormalSamples)
 trainingSet <- samples[which(rownames(samples) %in% trainingSamples),]
 validationSet <- samples[which(rownames(samples) %in% validationSamples),]
 
-write.csv(trainingSet, "Res/trainValidSplit/training_set.csv")
-write.csv(validationSet, "Res/trainValidSplit/validation_set.csv")
+write.csv(trainingSet, "Results/trainValidSplit/training_set.csv")
+write.csv(validationSet, "Results/trainValidSplit/validation_set.csv")
