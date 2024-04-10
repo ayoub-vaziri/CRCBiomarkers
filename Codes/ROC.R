@@ -78,5 +78,5 @@ valid <- cbind(group=group, validSet)
 
 data <- list(train, valid)
 
-rocCurve(data, biomarkers, "Results/supplementary/ROC.png", c(3, 4), 0.78, 0.50, 3600, 2680)
+rocCurve(data, biomarkers, "Results/ROC/ROC_.png", c(3, 4), 0.78, 0.50, 3600, 2680)
 rocCurve(data, biomarkers[-c(3,5)], "Results/ROC/ROC.png", c(3, 3), 0.78, 0.50, 3400, 3400)
