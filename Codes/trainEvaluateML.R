@@ -17,12 +17,104 @@ setwd(project_path)
 
 set.seed(123)
 
-#### Load and process train data ####
-#####################################
+#### Load and process test dataset ####
+#######################################
+gse21815 <- getGEO("GSE21815", destdir = "Data/")
+gse106582 <- getGEO("GSE106582", destdir = "Data/")
+
+gse21815 <- gse21815[[1]]
+gse106582 <- gse106582[[1]]
+
+expr21815 <- exprs(gse21815)
+expr106582 <- exprs(gse106582)
+
+feat21815 <- fData(gse21815)
+feat106582 <- fData(gse106582)
+
+phen21815 <- pData(gse21815)
+phen106582 <- pData(gse106582)
+
+expr21815 <- cbind(ID=rownames(expr21815), expr21815)
+expr106582 <- cbind(ID=rownames(expr106582), expr106582)
+
+feat21815 <- cbind(ID=feat21815$ID, symbol=feat21815$GENE_SYMBOL)
+feat106582 <- cbind(ID=feat106582$ID, symbol=feat106582$Symbol)
+
+expr21815 <- merge(feat21815, expr21815, by="ID")
+expr106582 <- merge(feat106582, expr106582, by="ID")
+
+rownames(expr21815) <- expr21815$ID
+rownames(expr106582) <- expr106582$ID
+
+expr21815 <- expr21815[,-1]
+expr106582 <- expr106582[,-1]
+
+lassoGenes <- fread("Res/LASSO/lassoGenes.txt", header = FALSE)$V1
+lassoGenes <- sort(lassoGenes)
+biomarkers <- lassoGenes[-c(3,5)]
+
+expr21815 <- expr21815[which(expr21815$symbol %in% biomarkers),]
+expr106582 <- expr106582[which(expr106582$symbol %in% biomarkers),]
+
+rownames(expr21815) <- NULL
+rownames(expr106582) <- NULL
+
+expr21815 <- expr21815[!duplicated(expr21815$symbol),]
+expr106582 <- expr106582[!duplicated(expr106582$symbol),]
+
+rownames(expr21815) <- expr21815$symbol
+rownames(expr106582) <- expr106582$symbol
+
+expr21815 <- expr21815[,-1]
+expr106582 <- expr106582[,-1]
+
+expr21815 <- as.data.frame(t(expr21815))
+expr106582 <- as.data.frame(t(expr106582))
+
+expr21815 <- expr21815[,biomarkers]
+expr106582 <- expr106582[,biomarkers]
+
+for (j in 1:ncol(expr21815)) expr21815[,j] <- as.numeric(expr21815[,j])
+for (j in 1:ncol(expr106582)) expr106582[,j] <- as.numeric(expr106582[,j])
+
+expr21815 <- na.omit(expr21815)
+expr106582 <- na.omit(expr106582)
+
+expr21815 <- cbind(sample=rownames(expr21815), expr21815)
+expr106582 <- cbind(sample=rownames(expr106582), expr106582)
+
+phen21815 <- cbind(sample=rownames(phen21815), phen21815)
+phen106582 <- cbind(sample=rownames(phen106582), phen106582)
+
+phen21815 <- cbind(sample=phen21815[,"sample"], group=phen21815[,9]) %>% as.data.frame()
+phen106582 <- cbind(sample=phen106582[,"sample"], group=phen106582[,37]) %>% as.data.frame()
+
+phen21815$group <- gsub("colorectal cancer", "Tumor", phen21815$group)
+phen21815$group <- gsub("normal epithelium", "Normal", phen21815$group)
+
+phen106582$group <- gsub("tumor", "Tumor", phen106582$group)
+phen106582$group <- gsub("mucosa", "Normal", phen106582$group)
+
+expr21815 <- merge(phen21815, expr21815, by="sample")
+expr106582 <- merge(phen106582, expr106582, by="sample")
+
+rownames(expr21815) <- expr21815$sample
+rownames(expr106582) <- expr106582$sample
+
+expr21815 <- expr21815[,-1]
+expr21815[,-1] <- log2(expr21815[,-1]+1)
+expr106582 <- expr106582[,-1]
+
+write.csv(expr21815, "Results/trainEvaluateML/GSE21815.csv")
+write.csv(expr106582, "Results/trainEvaluateML/GSE106582.csv")
+#######################################
+
+#### Load and process train and test data ####
+##############################################
 trainSet <- as.data.frame(fread("Results/batchCorrection/corrected_training_set.csv"))
 validSet <- as.data.frame(fread("Results/batchCorrection/corrected_validation_set.csv"))
-gse21815 <- as.data.frame(fread("Results/Data/GSE21815.csv"))
-gse106582 <- as.data.frame(fread("Results/Data/GSE106582.csv"))
+gse21815 <- as.data.frame(fread("Results/trainEvaluateML/GSE21815.csv"))
+gse106582 <- as.data.frame(fread("Results/trainEvaluateML/GSE106582.csv"))
 
 trainGroup <- trainSet$group
 validGroup <- validSet$group
@@ -74,7 +166,7 @@ accession <- "GSE106582"
 write.csv(train, "Results/trainEvaluateML/train_data.csv")
 write.csv(valid, "Results/trainEvaluateML/valid_data.csv")
 write.csv(test, "Results/trainEvaluateML/test_data.csv")
-#####################################
+##############################################
 
 #### ROC curve ####
 ###################
