@@ -4,7 +4,7 @@
 This github repository contains the data files and analysis code used for the scientific paper titled **"Integrating machine learning and bioinformatics approaches for identifying novel diagnostic gene biomarkers in colorectal cancer"**.
 The files are organised into four folders:
  - *Data*: which contains all the transcriptomic data required to perform the analyses.
- - *Codes*: contains the R script to reproduce all  analyses.
+ - *Codes*: contains the R scripts to reproduce all  analyses.
  - *Results*: contains all the results produced by the R scripts.
 
 ## Reproducing the results
