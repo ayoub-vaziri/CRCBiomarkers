@@ -8,7 +8,7 @@ The files are organised into four folders:
  - *Results*: contains all the results produced by the R scripts.
 
 ## Reproducing the results
-This repository contains all the code necessary to reproduce the results in the paper. 
+This repository contains all the code necessary to reproduce the results. 
 
 First, download the repository and place it in your project directory.
 
