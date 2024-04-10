@@ -1,7 +1,7 @@
 # CRCBiomarkers
 
 ## Overview
-This github repository contains the data files and analysis code used for the scientific paper titled **"Precision Diagnostics in Colorectal Cancer: Unraveling New Gene Biomarkers through Bioinformatics and Machine Learning"**.
+This github repository contains the data files and analysis code used for the scientific paper titled **"Integrating machine learning and bioinformatics approaches for identifying novel diagnostic gene biomarkers in colorectal cancer"**.
 The files are organised into four folders:
  - *Data*: which contains all the transcriptomic data required to perform the analyses described in the paper.
  - *Codes*: contains the R code to reproduce all  analyses.
