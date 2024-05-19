@@ -36,6 +36,7 @@ setwd(project_path)
 9. Run *LASSO.R* to identify candidate diagnostic genes from within the set of key genes on the training dataset.
 10. Run *ROC.R* to evaluate the sensitivity and specificity of candidate diagnostic genes on both the training and validation datasets.
 11. Run *trainEvaluateML.R* to verify the accuracy of diagnostic genes in distinguishing between normal and tumor samples using two machine learning models, namely, RF and SVM.
+12. Run *immuneAnalysis.R* to assess immune cell infiltration in CRC and the correlation between biomarkers and immune cells.
  
 ## Required software
 The scripts use core R functionality and several publicly available R packages listed below. Version numbers in brackets correspond to the versions of the packages that were used to develop and debug these scripts.
